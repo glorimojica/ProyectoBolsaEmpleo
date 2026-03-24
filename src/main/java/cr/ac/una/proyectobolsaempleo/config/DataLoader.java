@@ -59,7 +59,7 @@ public class DataLoader {
                 Empresa empresa = Empresa.builder()
                         .nombre("Empresa Demo")
                         .telefono("2222-2222")
-                        .ubicacion("Heredia")
+                        .localizacion("Heredia")
                         .descripcion("Empresa de prueba")
                         .usuario(usuarioEmpresa)
                         .build();

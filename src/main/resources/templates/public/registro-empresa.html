@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registro Empresa</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Registro de Empresa</h1>
+
+<p th:if="${error}" th:text="${error}" style="color:red;"></p>
+
+<form th:action="@{/registro/empresa}" method="post">
+    <label>Nombre:</label><br>
+    <input type="text" name="nombre" required><br><br>
+
+    <label>Localización:</label><br>
+    <input type="text" name="localizacion" required><br><br>
+
+    <label>Correo electrónico:</label><br>
+    <input type="email" name="correo" required><br><br>
+
+    <label>Teléfono:</label><br>
+    <input type="text" name="telefono" required><br><br>
+
+    <label>Descripción:</label><br>
+    <textarea name="descripcion" required></textarea><br><br>
+
+    <label>Contraseña:</label><br>
+    <input type="password" name="password" required><br><br>
+
+    <button type="submit">Registrar Empresa</button>
+</form>
+</body>
+</html>

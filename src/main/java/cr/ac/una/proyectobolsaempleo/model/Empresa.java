@@ -18,7 +18,7 @@ public class Empresa {
 
     private String nombre;
     private String telefono;
-    private String ubicacion;
+    private String localizacion;
     private String descripcion;
 
     @OneToOne

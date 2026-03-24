@@ -2,10 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login</title>
+    <meta charset="UTF-8">
 </head>
 <body>
-
 <h2>Iniciar sesión</h2>
+
+<p th:if="${mensaje}" th:text="${mensaje}" style="color:green;"></p>
+<p th:if="${param.error}" style="color:red;">Credenciales inválidas.</p>
+<p th:if="${param.logout}" style="color:blue;">Sesión cerrada correctamente.</p>
 
 <form th:action="@{/login}" method="post">
     <input type="text" name="username" placeholder="Correo" required>
@@ -14,6 +18,11 @@
     <br><br>
     <button type="submit">Entrar</button>
 </form>
+
+<br>
+<a th:href="@{/registro/empresa}">Registrarse como empresa</a>
+<br><br>
+<a th:href="@{/registro/oferente}">Registrarse como oferente</a>
 
 </body>
 </html>
