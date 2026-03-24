@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear puesto</title>
+</head>
+<body>
+<h1>Crear puesto</h1>
+
+<a th:href="@{/empresa/puestos}">Volver</a>
+
+<br><br>
+
+<form th:action="@{/empresa/puestos}" th:object="${puesto}" method="post">
+    <label>Título:</label>
+    <input type="text" th:field="*{titulo}" required>
+    <br><br>
+
+    <label>Descripción:</label>
+    <br>
+    <textarea th:field="*{descripcion}" rows="6" cols="50" required></textarea>
+    <br><br>
+
+    <label>Salario:</label>
+    <input type="number" step="0.01" th:field="*{salario}" required>
+    <br><br>
+
+    <label>Tipo de publicación:</label>
+    <select th:field="*{publico}">
+        <option th:value="true">Público</option>
+        <option th:value="false">Privado</option>
+    </select>
+    <br><br>
+
+    <button type="submit">Guardar puesto</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del puesto</title>
+</head>
+<body>
+<h1>Detalle del puesto</h1>
+
+<a th:href="@{/empresa/puestos}">Volver</a>
+
+<p><strong>ID:</strong> <span th:text="${puesto.id}"></span></p>
+<p><strong>Título:</strong> <span th:text="${puesto.titulo}"></span></p>
+<p><strong>Descripción:</strong> <span th:text="${puesto.descripcion}"></span></p>
+<p><strong>Salario:</strong> <span th:text="${puesto.salario}"></span></p>
+<p><strong>Tipo de publicación:</strong> <span th:text="${puesto.publico} ? 'Público' : 'Privado'"></span></p>
+<p><strong>Activo:</strong> <span th:text="${puesto.activo} ? 'Sí' : 'No'"></span></p>
+</body>
+</html>

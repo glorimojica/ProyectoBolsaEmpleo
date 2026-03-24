@@ -1,9 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <title>empresa</title>
+    <meta charset="UTF-8">
+    <title>Dashboard Empresa</title>
 </head>
 <body>
 <h1>Bienvenido empresa</h1>
+
+<p>Desde aquí puedes administrar tus puestos.</p>
+
+<a th:href="@{/empresa/puestos}">Ver mis puestos</a>
+<br><br>
+
+<a th:href="@{/empresa/puestos/nuevo}">Crear nuevo puesto</a>
+<br><br>
+
+<a th:href="@{/logout}">Cerrar sesión</a>
 </body>
 </html>
