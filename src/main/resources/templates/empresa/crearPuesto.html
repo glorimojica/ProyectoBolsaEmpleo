@@ -2,37 +2,195 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear puesto</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #2c3e6b;
+            padding: 14px 40px;
+        }
+
+        nav a {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .pagina {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #dde3ed;
+            border-radius: 10px;
+            padding: 36px 40px;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .card h1 {
+            font-size: 1.5rem;
+            color: #2c3e6b;
+            margin-bottom: 6px;
+        }
+
+        .subtitulo {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 24px;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .campo input,
+        .campo textarea,
+        .campo select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background-color: #fafafa;
+        }
+
+        .campo textarea {
+            resize: vertical;
+            min-height: 130px;
+            line-height: 1.5;
+        }
+
+        .campo input:focus,
+        .campo textarea:focus,
+        .campo select:focus {
+            outline: none;
+            border-color: #4a90d9;
+            background-color: white;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-guardar {
+            background-color: #f0b429;
+            color: #333;
+        }
+
+        .btn-guardar:hover {
+            background-color: #d9a020;
+        }
+
+        .btn-volver {
+            background-color: #eaf4fb;
+            color: #1a6da3;
+            border: 1px solid #aed6f1;
+        }
+
+        .btn-volver:hover {
+            background-color: #dbeefa;
+        }
+
+        footer {
+            background-color: #2c3e6b;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 16px;
+            font-size: 0.82rem;
+        }
+    </style>
 </head>
 <body>
-<h1>Crear puesto</h1>
 
-<a th:href="@{/empresa/puestos}">Volver</a>
+<nav>
+    <a th:href="@{/empresa/dashboard}">💼 BolsaEmpleos</a>
+</nav>
 
-<br><br>
+<div class="pagina">
+    <div class="card">
+        <h1>Crear puesto</h1>
+        <p class="subtitulo">Completa la información para publicar una nueva oportunidad laboral.</p>
 
-<form th:action="@{/empresa/puestos}" th:object="${puesto}" method="post">
-    <label>Título:</label>
-    <input type="text" th:field="*{titulo}" required>
-    <br><br>
+        <form th:action="@{/empresa/puestos}" th:object="${puesto}" method="post">
+            <div class="campo">
+                <label for="titulo">Título del puesto</label>
+                <input type="text" id="titulo" th:field="*{titulo}" placeholder="Ej. Desarrollador Java Junior" required>
+            </div>
 
-    <label>Descripción:</label>
-    <br>
-    <textarea th:field="*{descripcion}" rows="6" cols="50" required></textarea>
-    <br><br>
+            <div class="campo">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" th:field="*{descripcion}" placeholder="Describe funciones, requisitos y responsabilidades del puesto..." required></textarea>
+            </div>
 
-    <label>Salario:</label>
-    <input type="number" step="0.01" th:field="*{salario}" required>
-    <br><br>
+            <div class="campo">
+                <label for="salario">Salario</label>
+                <input type="number" id="salario" step="0.01" th:field="*{salario}" placeholder="Ej. 850000" required>
+            </div>
 
-    <label>Tipo de publicación:</label>
-    <select th:field="*{publico}">
-        <option th:value="true">Público</option>
-        <option th:value="false">Privado</option>
-    </select>
-    <br><br>
+            <div class="campo">
+                <label for="publico">Tipo de publicación</label>
+                <select id="publico" th:field="*{publico}">
+                    <option th:value="true">Público</option>
+                    <option th:value="false">Privado</option>
+                </select>
+            </div>
 
-    <button type="submit">Guardar puesto</button>
-</form>
+            <div class="acciones">
+                <button type="submit" class="btn btn-guardar">Guardar puesto</button>
+                <a th:href="@{/empresa/puestos}" class="btn btn-volver">← Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer>
+    © 2025 BolsaEmpleos — Todos los derechos reservados
+</footer>
+
 </body>
 </html>

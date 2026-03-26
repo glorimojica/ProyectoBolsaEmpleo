@@ -8,6 +8,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.AuthenticationException;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Configuration
 public class SecurityConfig {
@@ -29,6 +36,19 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/redirigir", true)
+                        .failureHandler((request, response, exception) -> {
+                            String mensaje = "Credenciales inválidas.";
+
+                            if (exception.getMessage() != null) {
+                                if (exception.getMessage().startsWith("RECHAZADO:")) {
+                                    mensaje = "Su registro fue rechazado. Razón: " + exception.getMessage().replace("RECHAZADO:", "");
+                                } else if (exception.getMessage().equals("PENDIENTE")) {
+                                    mensaje = "Su registro aún está pendiente de aprobación.";
+                                }
+                            }
+
+                            response.sendRedirect("/login?errorMessage=" + URLEncoder.encode(mensaje, StandardCharsets.UTF_8));
+                        })
                         .permitAll()
                 )
                 .logout(logout -> logout

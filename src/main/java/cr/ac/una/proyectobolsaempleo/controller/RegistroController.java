@@ -53,6 +53,8 @@ public class RegistroController {
                 .password(passwordEncoder.encode(password))
                 .rol("EMPRESA")
                 .activo(false)
+                .estado("PENDIENTE")
+                .comentarioRevision(null)
                 .build();
 
         usuarioRepository.save(usuario);
@@ -98,6 +100,8 @@ public class RegistroController {
                 .password(passwordEncoder.encode(password))
                 .rol("OFERENTE")
                 .activo(false)
+                .estado("PENDIENTE")
+                .comentarioRevision(null)
                 .build();
 
         usuarioRepository.save(usuario);

@@ -27,4 +27,10 @@ public class Usuario {
 
     @Column(nullable = false)
     private boolean activo;
+
+    @Column(nullable = false)
+    private String estado; // PENDIENTE, APROBADO, RECHAZADO
+
+    @Column(length = 500)
+    private String comentarioRevision;
 }

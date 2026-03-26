@@ -1,284 +1,224 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <title>Registro Empresa – BolsaEmpleos</title>
+    <title>Registro Empresa</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --navy:   #0f1f3d;
-            --gold:   #e8a923;
-            --gold-l: #fdf6e3;
-            --cream:  #f9f6f1;
-            --teal:   #00b4a2;
-            --text:   #1a2642;
-            --muted:  #6b7a99;
-            --error:  #d94f4f;
-            --border: #d8dde8;
-            --white:  #ffffff;
-            --radius: 12px;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        html, body {
-            min-height: 100vh;
-            font-family: 'DM Sans', sans-serif;
-            background: var(--cream);
-            color: var(--text);
-        }
-
-        .page {
-            display: grid;
-            grid-template-columns: 420px 1fr;
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
             min-height: 100vh;
         }
 
-        /* ── LEFT PANEL ── */
-        .panel {
-            background: var(--navy);
-            padding: 56px 48px;
+        nav {
+            background-color: #2c3e6b;
+            padding: 14px 40px;
+        }
+
+        nav a {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .pagina {
+            flex: 1;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
-        }
-        .panel::before {
-            content: '';
-            position: absolute;
-            width: 480px; height: 480px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(232,169,35,.2), transparent 70%);
-            top: -100px; right: -140px;
-            pointer-events: none;
-        }
-        .panel::after {
-            content: '';
-            position: absolute;
-            width: 320px; height: 320px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,180,162,.15), transparent 70%);
-            bottom: -60px; left: -80px;
-            pointer-events: none;
-        }
-
-        .brand { position: relative; z-index: 1; }
-        .brand-logo {
-            display: flex; align-items: center; gap: 12px;
-            margin-bottom: 56px;
-        }
-        .brand-icon {
-            width: 44px; height: 44px;
-            background: var(--gold);
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .brand-icon svg { width: 24px; height: 24px; }
-        .brand-name { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.4rem; }
-
-        .panel-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.4rem;
-            color: var(--white);
-            line-height: 1.2;
-            margin-bottom: 20px;
-        }
-        .panel-title span { color: var(--gold); }
-        .panel-desc { color: rgba(255,255,255,.55); font-size: .95rem; line-height: 1.7; }
-
-        .features { margin-top: 48px; display: flex; flex-direction: column; gap: 18px; position: relative; z-index: 1; }
-        .feature { display: flex; align-items: flex-start; gap: 14px; }
-        .feature-dot {
-            width: 32px; height: 32px; flex-shrink: 0;
-            background: rgba(232,169,35,.12);
-            border: 1px solid rgba(232,169,35,.35);
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1rem;
-        }
-        .feature-text { color: rgba(255,255,255,.7); font-size: .88rem; line-height: 1.5; }
-        .feature-text strong { color: var(--white); display: block; font-size: .95rem; }
-
-        .panel-footer { color: rgba(255,255,255,.3); font-size: .8rem; }
-
-        /* ── FORM AREA ── */
-        .form-area {
-            padding: 56px 64px;
-            display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            overflow-y: auto;
-            animation: slideIn .5s ease;
-        }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: none; } }
-
-        .form-header { margin-bottom: 40px; }
-        .form-header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem; color: var(--navy); margin-bottom: 8px;
-        }
-        .form-header p { color: var(--muted); font-size: .95rem; }
-        .form-header a { color: var(--teal); text-decoration: none; font-weight: 500; }
-
-        .error-banner {
-            background: #fff0f0;
-            border: 1px solid #f5c6c6;
-            border-left: 4px solid var(--error);
-            color: var(--error);
-            padding: 14px 18px;
-            border-radius: var(--radius);
-            margin-bottom: 28px;
-            font-size: .9rem;
-            display: flex; align-items: center; gap: 10px;
+            padding: 40px 20px;
         }
 
-        form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .full { grid-column: 1 / -1; }
-
-        .field { display: flex; flex-direction: column; gap: 7px; }
-        label {
-            font-size: .82rem; font-weight: 500;
-            color: var(--muted);
-            letter-spacing: .05em;
-            text-transform: uppercase;
-        }
-        input, textarea {
-            font-family: 'DM Sans', sans-serif;
-            font-size: .97rem; color: var(--text);
-            background: var(--white);
-            border: 1.5px solid var(--border);
+        .card {
+            background: white;
+            border: 1px solid #dde3ed;
             border-radius: 10px;
-            padding: 13px 16px;
-            transition: border-color .2s, box-shadow .2s;
-            outline: none; width: 100%;
-        }
-        textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
-        input:focus, textarea:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(232,169,35,.12);
-        }
-
-        .submit-row { grid-column: 1 / -1; margin-top: 8px; }
-        button[type="submit"] {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1rem; font-weight: 500;
-            color: var(--navy);
-            background: var(--gold);
-            border: none; border-radius: 10px;
-            padding: 15px 32px;
-            cursor: pointer;
-            transition: background .2s, transform .15s, box-shadow .2s;
+            padding: 36px 40px;
             width: 100%;
-            letter-spacing: .02em;
+            max-width: 520px;
         }
+
+        .card h1 {
+            font-size: 1.4rem;
+            color: #2c3e6b;
+            margin-bottom: 6px;
+        }
+
+        .card .subtitulo {
+            font-size: 0.88rem;
+            color: #888;
+            margin-bottom: 24px;
+        }
+
+        .alerta-error {
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            margin-bottom: 18px;
+            background: #fdecea;
+            color: #c0392b;
+            border: 1px solid #f5c6c6;
+        }
+
+        .fila {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .campo {
+            margin-bottom: 16px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 0.82rem;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .campo input,
+        .campo textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background-color: #fafafa;
+        }
+
+        .campo textarea {
+            resize: vertical;
+            min-height: 100px;
+            line-height: 1.5;
+        }
+
+        .campo input:focus,
+        .campo textarea:focus {
+            outline: none;
+            border-color: #f0b429;
+            background-color: white;
+        }
+
+        .separador {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 8px 0 16px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 11px;
+            background-color: #f0b429;
+            color: #333;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.97rem;
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+
         button[type="submit"]:hover {
-            background: #d49918;
-            box-shadow: 0 8px 24px rgba(232,169,35,.4);
-            transform: translateY(-1px);
+            background-color: #d9a020;
         }
-        button[type="submit"]:active { transform: translateY(0); }
 
-        .divider { grid-column: 1 / -1; border: none; border-top: 1.5px solid var(--border); margin: 4px 0; }
+        .links {
+            margin-top: 20px;
+            text-align: center;
+        }
 
-        @media (max-width: 900px) {
-            .page { grid-template-columns: 1fr; }
-            .panel { display: none; }
-            .form-area { padding: 40px 28px; }
-            form { grid-template-columns: 1fr; }
+        .links a {
+            font-size: 0.88rem;
+            color: #4a90d9;
+            text-decoration: none;
+        }
+
+        .links a:hover { text-decoration: underline; }
+
+        footer {
+            background-color: #2c3e6b;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 16px;
+            font-size: 0.82rem;
         }
     </style>
 </head>
 <body>
-<div class="page">
 
-    <!-- LEFT PANEL -->
-    <aside class="panel">
-        <div class="brand">
-            <div class="brand-logo">
-                <div class="brand-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#0f1f3d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                        <polyline points="9 22 9 12 15 12 15 22"/>
-                    </svg>
-                </div>
-                <span class="brand-name">BolsaEmpleos</span>
-            </div>
+<nav>
+    <a th:href="@{/}">💼 BolsaEmpleos</a>
+</nav>
 
-            <h2 class="panel-title">Encuentra el<br>talento que<br><span>necesitas</span></h2>
-            <p class="panel-desc">Publica tus ofertas laborales y conecta con los mejores profesionales del mercado.</p>
+<div class="pagina">
+    <div class="card">
+        <h1>Registro de empresa</h1>
+        <p class="subtitulo">Crea tu cuenta para publicar ofertas de empleo</p>
 
-            <div class="features">
-                <div class="feature">
-                    <div class="feature-dot">✦</div>
-                    <div class="feature-text"><strong>Publicación ilimitada</strong>Crea y gestiona todas tus ofertas de empleo.</div>
-                </div>
-                <div class="feature">
-                    <div class="feature-dot">◎</div>
-                    <div class="feature-text"><strong>Candidatos calificados</strong>Accede a miles de perfiles verificados.</div>
-                </div>
-                <div class="feature">
-                    <div class="feature-dot">❋</div>
-                    <div class="feature-text"><strong>Panel empresarial</strong>Gestiona postulaciones desde un solo lugar.</div>
-                </div>
-            </div>
-        </div>
-
-    </aside>
-
-    <!-- RIGHT / FORM -->
-    <main class="form-area">
-        <div class="form-header">
-            <h1>Registrar empresa</h1>
-            <p>¿Ya tienes cuenta? <a href="/login">Inicia sesión aquí</a></p>
-        </div>
-
-        <p class="error-banner" th:if="${error}">
-            ⚠ <span th:text="${error}"></span>
-        </p>
+        <div class="alerta-error" th:if="${error}" th:text="${error}"></div>
 
         <form th:action="@{/registro/empresa}" method="post">
 
-            <div class="field full">
+            <div class="campo">
                 <label for="nombre">Nombre de la empresa</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Ej. Acme Corp S.A." required>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej. Acme S.A." required>
             </div>
 
-            <div class="field">
-                <label for="localizacion">Localización</label>
-                <input type="text" id="localizacion" name="localizacion" placeholder="Ciudad, País" required>
+            <div class="fila">
+                <div class="campo">
+                    <label for="localizacion">Localización</label>
+                    <input type="text" id="localizacion" name="localizacion" placeholder="Ciudad, País" required>
+                </div>
+                <div class="campo">
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" id="telefono" name="telefono" placeholder="2222-2222" required>
+                </div>
             </div>
 
-            <div class="field">
-                <label for="telefono">Teléfono</label>
-                <input type="text" id="telefono" name="telefono" placeholder="Ej. 2222-2222" required>
-            </div>
-
-            <div class="field full">
-                <label for="correo">Correo electrónico corporativo</label>
+            <div class="campo">
+                <label for="correo">Correo electrónico</label>
                 <input type="email" id="correo" name="correo" placeholder="contacto@empresa.com" required>
             </div>
 
-            <div class="field full">
+            <div class="campo">
                 <label for="descripcion">Descripción de la empresa</label>
-                <textarea id="descripcion" name="descripcion" placeholder="Cuéntanos sobre su misión, industria y cultura organizacional…" required></textarea>
+                <textarea id="descripcion" name="descripcion" placeholder="¿A qué se dedica la empresa?" required></textarea>
             </div>
 
-            <hr class="divider">
+            <hr class="separador">
 
-            <div class="field full">
+            <div class="campo">
                 <label for="password">Contraseña</label>
                 <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres" required>
             </div>
 
-            <div class="submit-row">
-                <button type="submit">Registrar empresa →</button>
-            </div>
-
+            <button type="submit">Registrar empresa</button>
         </form>
-    </main>
 
+        <div class="links">
+            <a th:href="@{/login}">¿Ya tienes cuenta? Inicia sesión</a>
+        </div>
+    </div>
 </div>
+
+<footer>
+    © 2025 BolsaEmpleos — Todos los derechos reservados
+</footer>
+
 </body>
 </html>

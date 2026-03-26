@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <title>Empresas Pendientes</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    nav {
+      background-color: #2c3e6b;
+      padding: 14px 40px;
+    }
+
+    nav a {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .pagina {
+      flex: 1;
+      padding: 40px 20px;
+    }
+
+    .contenedor {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #dde3ed;
+      border-radius: 10px;
+      padding: 30px;
+    }
+
+    .card h1 {
+      font-size: 1.5rem;
+      color: #2c3e6b;
+      margin-bottom: 6px;
+    }
+
+    .subtitulo {
+      font-size: 0.9rem;
+      color: #777;
+      margin-bottom: 24px;
+    }
+
+    .tabla-wrapper {
+      overflow-x: auto;
+      border: 1px solid #dde3ed;
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 950px;
+      background-color: white;
+    }
+
+    thead {
+      background-color: #2c3e6b;
+      color: white;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 14px 12px;
+      vertical-align: top;
+      font-size: 0.92rem;
+    }
+
+    th {
+      font-weight: 600;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #e8edf5;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9fbfd;
+    }
+
+    tbody tr:hover {
+      background-color: #eef4fa;
+    }
+
+    .descripcion {
+      max-width: 240px;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .correo {
+      color: #4a90d9;
+      font-weight: 500;
+    }
+
+    .acciones {
+      min-width: 220px;
+    }
+
+    .form-aprobar {
+      margin-bottom: 10px;
+    }
+
+    .motivo-rechazo {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      background-color: #fafafa;
+      margin-bottom: 8px;
+    }
+
+    .motivo-rechazo:focus {
+      outline: none;
+      border-color: #4a90d9;
+      background-color: white;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 6px;
+      padding: 9px 14px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .btn-aprobar {
+      width: 100%;
+      background-color: #1abc9c;
+      color: white;
+    }
+
+    .btn-aprobar:hover {
+      background-color: #17a589;
+    }
+
+    .btn-rechazar {
+      width: 100%;
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    .btn-rechazar:hover {
+      background-color: #cb4335;
+    }
+
+    .acciones-footer {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .acciones-footer a {
+      color: #4a90d9;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .acciones-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .empty-box {
+      background: #f9fbfd;
+      border: 1px dashed #c9d4e3;
+      border-radius: 10px;
+      padding: 40px 20px;
+      text-align: center;
+      color: #7b8794;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background-color: #2c3e6b;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 16px;
+      font-size: 0.82rem;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a th:href="@{/admin/dashboard}">💼 BolsaEmpleos</a>
+</nav>
+
+<div class="pagina">
+  <div class="contenedor">
+    <div class="card">
+      <h1>Empresas pendientes de aprobación</h1>
+      <p class="subtitulo">Revisa la información de las empresas registradas y decide si deseas aprobarlas o rechazarlas.</p>
+
+      <div th:if="${#lists.isEmpty(empresas)}" class="empty-box">
+        No hay empresas pendientes de aprobación en este momento.
+      </div>
+
+      <div th:if="${not #lists.isEmpty(empresas)}" class="tabla-wrapper">
+        <table>
+          <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Localización</th>
+            <th>Descripción</th>
+            <th>Correo</th>
+            <th>Acción</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="empresa : ${empresas}">
+            <td th:text="${empresa.nombre}">Nombre Empresa</td>
+            <td th:text="${empresa.telefono}">2222-2222</td>
+            <td th:text="${empresa.localizacion}">San José, Costa Rica</td>
+            <td class="descripcion" th:text="${empresa.descripcion}">Descripción de la empresa</td>
+            <td class="correo" th:text="${empresa.usuario.correo}">correo@empresa.com</td>
+            <td class="acciones">
+              <form class="form-aprobar"
+                    th:action="@{/admin/aprobar-empresa/{id}(id=${empresa.usuario.id})}"
+                    method="post">
+                <button class="btn btn-aprobar" type="submit">Aprobar</button>
+              </form>
+
+              <form th:action="@{/admin/rechazar-empresa/{id}(id=${empresa.usuario.id})}"
+                    method="post">
+                <input class="motivo-rechazo" type="text" name="comentario" placeholder="Razón del rechazo" required>
+                <button class="btn btn-rechazar" type="submit">Rechazar</button>
+              </form>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="acciones-footer">
+        <a th:href="@{/admin/dashboard}">← Volver al dashboard</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 BolsaEmpleos — Todos los derechos reservados
+</footer>
+
+</body>
+</html>

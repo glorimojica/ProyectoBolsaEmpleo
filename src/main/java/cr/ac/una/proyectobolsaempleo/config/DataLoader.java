@@ -33,6 +33,8 @@ public class DataLoader {
                         .password(passwordEncoder.encode("1234"))
                         .rol("ADMIN")
                         .activo(true)
+                        .estado("APROBADO")
+                        .comentarioRevision(null)
                         .build();
 
                 usuarioRepository.save(usuarioAdmin);
@@ -52,6 +54,8 @@ public class DataLoader {
                         .password(passwordEncoder.encode("1234"))
                         .rol("EMPRESA")
                         .activo(true)
+                        .estado("APROBADO")
+                        .comentarioRevision(null)
                         .build();
 
                 usuarioRepository.save(usuarioEmpresa);
@@ -74,11 +78,14 @@ public class DataLoader {
                         .password(passwordEncoder.encode("1234"))
                         .rol("OFERENTE")
                         .activo(true)
+                        .estado("APROBADO")
+                        .comentarioRevision(null)
                         .build();
 
                 usuarioRepository.save(usuarioOferente);
 
                 Oferente oferente = Oferente.builder()
+                        .identificacion("123456789")
                         .nombre("Juan")
                         .apellido("Pérez")
                         .telefono("8888-8888")

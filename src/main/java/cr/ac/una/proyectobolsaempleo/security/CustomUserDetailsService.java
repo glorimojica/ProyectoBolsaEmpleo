@@ -3,6 +3,7 @@ package cr.ac.una.proyectobolsaempleo.security;
 import cr.ac.una.proyectobolsaempleo.model.Usuario;
 import cr.ac.una.proyectobolsaempleo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,16 @@ public class CustomUserDetailsService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
+        if ("RECHAZADO".equals(usuario.getEstado())) {
+            throw new DisabledException("RECHAZADO:" + usuario.getComentarioRevision());
+        }
+
+        if ("PENDIENTE".equals(usuario.getEstado())) {
+            throw new DisabledException("PENDIENTE");
+        }
+
         if (!usuario.isActivo()) {
-            throw new UsernameNotFoundException("Usuario inactivo");
+            throw new DisabledException("INACTIVO");
         }
 
         return new User(
