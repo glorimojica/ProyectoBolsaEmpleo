@@ -11,6 +11,10 @@ import cr.ac.una.proyectobolsaempleo.model.Empresa;
 import cr.ac.una.proyectobolsaempleo.model.Puesto;
 import cr.ac.una.proyectobolsaempleo.repository.EmpresaRepository;
 import cr.ac.una.proyectobolsaempleo.repository.PuestoRepository;
+import cr.ac.una.proyectobolsaempleo.model.Caracteristica;
+import cr.ac.una.proyectobolsaempleo.model.PuestoCaracteristica;
+import cr.ac.una.proyectobolsaempleo.repository.CaracteristicaRepository;
+import cr.ac.una.proyectobolsaempleo.repository.PuestoCaracteristicaRepository;
 
 @Controller
 @RequestMapping("/empresa")
@@ -21,6 +25,12 @@ public class EmpresaController {
 
     @Autowired
     private PuestoRepository puestoRepository;
+
+    @Autowired
+    private CaracteristicaRepository caracteristicaRepository;
+
+    @Autowired
+    private PuestoCaracteristicaRepository puestoCaracteristicaRepository;
 
     @GetMapping("/dashboard")
     public String dashboardEmpresa() {
@@ -45,16 +55,21 @@ public class EmpresaController {
     }
 
     @PostMapping("/puestos")
-    public String guardarPuesto(@ModelAttribute Puesto puesto, Authentication authentication) {
+    public String guardarPuesto(@ModelAttribute Puesto puesto, Authentication authentication, Model model) {
         String correo = authentication.getName();
         Empresa empresa = empresaRepository.findByUsuarioCorreo(correo).orElse(null);
         if (empresa == null) {
             return "redirect:/login";
         }
+        if (puesto.getSalario() == null || puesto.getSalario() <= 0) {
+            model.addAttribute("error", "El salario debe ser mayor a 0.");
+            model.addAttribute("puesto", puesto);
+            return "empresa/crearPuesto";
+        }
         puesto.setEmpresa(empresa);
         puesto.setActivo(true);
-
         puestoRepository.save(puesto);
+
         return "redirect:/empresa/puestos";
     }
 
@@ -86,5 +101,70 @@ public class EmpresaController {
             puestoRepository.save(puesto);
         }
         return "redirect:/empresa/puestos";
+    }
+
+    @GetMapping("/puestos/{id}/requisitos")
+    public String verRequisitos(@PathVariable Long id, Authentication authentication, Model model) {
+        String correo = authentication.getName();
+        Empresa empresa = empresaRepository.findByUsuarioCorreo(correo).orElse(null);
+        if (empresa == null) {
+            return "redirect:/login";
+        }
+        Puesto puesto = puestoRepository.findByIdAndEmpresaId(id, empresa.getId()).orElse(null);
+        if (puesto == null) {
+            return "redirect:/empresa/puestos";
+        }
+        model.addAttribute("puesto", puesto);
+        model.addAttribute("requisitos", puestoCaracteristicaRepository.findByPuestoId(id));
+        model.addAttribute("caracteristicas", caracteristicaRepository.findAll());
+
+        return "empresa/requisitosPuesto";
+    }
+
+    @PostMapping("/puestos/{id}/requisitos")
+    public String agregarRequisito(@PathVariable Long id, @RequestParam("caracteristicaId") Long caracteristicaId, @RequestParam("nivel") Integer nivel, Authentication authentication, Model model) {
+        String correo = authentication.getName();
+        Empresa empresa = empresaRepository.findByUsuarioCorreo(correo).orElse(null);
+        if (empresa == null) {
+            return "redirect:/login";
+        }
+        Puesto puesto = puestoRepository.findByIdAndEmpresaId(id, empresa.getId()).orElse(null);
+        if (puesto == null) {
+            return "redirect:/empresa/puestos";
+        }
+        if (puestoCaracteristicaRepository.existsByPuestoIdAndCaracteristicaId(id, caracteristicaId)) {
+            model.addAttribute("error", "Ese requisito ya fue agregado.");
+            model.addAttribute("puesto", puesto);
+            model.addAttribute("requisitos", puestoCaracteristicaRepository.findByPuestoId(id));
+            model.addAttribute("caracteristicas", caracteristicaRepository.findAll());
+            return "empresa/requisitosPuesto";
+        }
+        Caracteristica caracteristica = caracteristicaRepository.findById(caracteristicaId).orElse(null);
+        if (caracteristica == null) {
+            return "redirect:/empresa/puestos/" + id + "/requisitos";
+        }
+        PuestoCaracteristica requisito = PuestoCaracteristica.builder().puesto(puesto).caracteristica(caracteristica).nivel(nivel).build();
+        puestoCaracteristicaRepository.save(requisito);
+
+        return "redirect:/empresa/puestos/" + id + "/requisitos";
+    }
+
+    @PostMapping("/puestos/{puestoId}/requisitos/{reqId}/eliminar")
+    public String eliminarRequisito(@PathVariable Long puestoId, @PathVariable Long reqId, Authentication authentication) {
+        String correo = authentication.getName();
+        Empresa empresa = empresaRepository.findByUsuarioCorreo(correo).orElse(null);
+        if (empresa == null) {
+            return "redirect:/login";
+        }
+        Puesto puesto = puestoRepository.findByIdAndEmpresaId(puestoId, empresa.getId()).orElse(null);
+        if (puesto == null) {
+            return "redirect:/empresa/puestos";
+        }
+        PuestoCaracteristica requisito = puestoCaracteristicaRepository.findByIdAndPuestoId(reqId, puestoId).orElse(null);
+        if (requisito != null) {
+            puestoCaracteristicaRepository.delete(requisito);
+        }
+
+        return "redirect:/empresa/puestos/" + puestoId + "/requisitos";
     }
 }

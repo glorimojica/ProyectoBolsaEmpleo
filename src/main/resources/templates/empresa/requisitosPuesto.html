@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Requisitos del puesto</title>
+</head>
+<body>
+
+<h1>Requisitos del puesto</h1>
+
+<p><strong>Puesto:</strong> <span th:text="${puesto.titulo}"></span></p>
+
+<a th:href="@{/empresa/puestos}">Volver a mis puestos</a>
+
+<br><br>
+
+<div th:if="${error}" style="color:red; margin-bottom:15px;" th:text="${error}"></div>
+
+<form th:action="@{/empresa/puestos/{id}/requisitos(id=${puesto.id})}" method="post">
+    <label>Característica:</label>
+    <select name="caracteristicaId" required>
+        <option value="">Seleccione una opción</option>
+        <option th:each="c : ${caracteristicas}"
+                th:value="${c.id}"
+                th:text="${c.nombre}">
+        </option>
+    </select>
+
+    <br><br>
+
+    <label>Nivel requerido:</label>
+    <input type="number" name="nivel" min="1" max="5" required>
+
+    <br><br>
+
+    <button type="submit">Agregar requisito</button>
+</form>
+
+<br><br>
+
+<table border="1" cellpadding="8">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Característica</th>
+        <th>Nivel</th>
+        <th>Acción</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="r : ${requisitos}">
+        <td th:text="${r.id}"></td>
+        <td th:text="${r.caracteristica.nombre}"></td>
+        <td th:text="${r.nivel}"></td>
+        <td>
+            <form th:action="@{/empresa/puestos/{puestoId}/requisitos/{reqId}/eliminar(puestoId=${puesto.id}, reqId=${r.id})}"
+                  method="post">
+                <button type="submit">Eliminar</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

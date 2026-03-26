@@ -157,6 +157,7 @@
         <p class="subtitulo">Completa la información para publicar una nueva oportunidad laboral.</p>
 
         <form th:action="@{/empresa/puestos}" th:object="${puesto}" method="post">
+            <div th:if="${error}" style="color:red; margin-bottom:15px;" th:text="${error}"></div>
             <div class="campo">
                 <label for="titulo">Título del puesto</label>
                 <input type="text" id="titulo" th:field="*{titulo}" placeholder="Ej. Desarrollador Java Junior" required>

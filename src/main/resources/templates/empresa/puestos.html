@@ -293,6 +293,8 @@
               <div class="acciones">
                 <a th:href="@{/empresa/puestos/{id}(id=${puesto.id})}" class="btn-detalle">Ver detalle</a>
 
+                <a th:href="@{/empresa/puestos/{id}/requisitos(id=${puesto.id})}" class="btn-detalle">Requisitos</a>
+
                 <form th:action="@{/empresa/puestos/{id}/toggle(id=${puesto.id})}" method="post" style="display:inline;">
                   <button type="submit"
                           th:class="${puesto.activo} ? 'btn-toggle btn-desactivar' : 'btn-toggle btn-activar'"
