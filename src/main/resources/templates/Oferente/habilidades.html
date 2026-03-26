@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis habilidades</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f0f4f8;
+        }
+
+        nav {
+            background-color: #2c3e6b;
+            padding: 14px 40px;
+        }
+
+        nav a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .pagina {
+            padding: 40px 20px;
+        }
+
+        .contenedor {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #dde3ed;
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        h1 {
+            color: #2c3e6b;
+            margin-bottom: 10px;
+        }
+
+        .acciones {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-add {
+            background: #1abc9c;
+            color: white;
+        }
+
+        .btn-back {
+            background: #eaf4fb;
+            color: #1a6da3;
+            border: 1px solid #aed6f1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #2c3e6b;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #2c3e6b;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 16px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a th:href="@{/oferente/dashboard}">💼 BolsaEmpleos</a>
+</nav>
+
+<div class="pagina">
+    <div class="contenedor">
+        <div class="card">
+
+            <h1>Mis habilidades</h1>
+
+            <div class="acciones">
+                <a th:href="@{/oferente/dashboard}" class="btn btn-back">← Dashboard</a>
+                <a th:href="@{/oferente/habilidades/nueva}" class="btn btn-add">Agregar habilidad</a>
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Característica</th>
+                    <th>Nivel</th>
+                    <th>Acción</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="h : ${habilidades}">
+                    <td th:text="${h.id}"></td>
+                    <td th:text="${h.caracteristica.nombre}"></td>
+                    <td th:text="${h.nivel}"></td>
+                    <td>
+                        <form th:action="@{/oferente/habilidades/{id}/eliminar(id=${h.id})}" method="post">
+                            <button class="btn-delete">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    © 2025 BolsaEmpleos
+</footer>
+
+</body>
+</html>

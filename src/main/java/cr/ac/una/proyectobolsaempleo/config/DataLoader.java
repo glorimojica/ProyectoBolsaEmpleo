@@ -12,6 +12,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import cr.ac.una.proyectobolsaempleo.model.Caracteristica;
+import cr.ac.una.proyectobolsaempleo.repository.CaracteristicaRepository;
 
 @Configuration
 public class DataLoader {
@@ -22,7 +24,8 @@ public class DataLoader {
             AdministradorRepository administradorRepository,
             EmpresaRepository empresaRepository,
             OferenteRepository oferenteRepository,
-            PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder,
+            CaracteristicaRepository caracteristicaRepository) {
 
         return args -> {
 
@@ -95,6 +98,15 @@ public class DataLoader {
                         .build();
 
                 oferenteRepository.save(oferente);
+            }
+
+            if (caracteristicaRepository.count() == 0) {
+                caracteristicaRepository.save(Caracteristica.builder().nombre("Java").build());
+                caracteristicaRepository.save(Caracteristica.builder().nombre("C#").build());
+                caracteristicaRepository.save(Caracteristica.builder().nombre("MySQL").build());
+                caracteristicaRepository.save(Caracteristica.builder().nombre("Oracle").build());
+                caracteristicaRepository.save(Caracteristica.builder().nombre("HTML").build());
+                caracteristicaRepository.save(Caracteristica.builder().nombre("CSS").build());
             }
         };
     }
