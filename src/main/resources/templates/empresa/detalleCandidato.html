@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del candidato</title>
+</head>
+<body>
+
+<h1>Detalle del candidato</h1>
+
+<a th:href="@{/empresa/puestos}">Volver a mis puestos</a>
+
+<p><strong>Identificación:</strong> <span th:text="${oferente.identificacion}"></span></p>
+<p><strong>Nombre:</strong> <span th:text="${oferente.nombre}"></span></p>
+<p><strong>Apellido:</strong> <span th:text="${oferente.apellido}"></span></p>
+<p><strong>Nacionalidad:</strong> <span th:text="${oferente.nacionalidad}"></span></p>
+<p><strong>Teléfono:</strong> <span th:text="${oferente.telefono}"></span></p>
+<p><strong>Residencia:</strong> <span th:text="${oferente.residencia}"></span></p>
+<p><strong>Correo:</strong> <span th:text="${oferente.usuario.correo}"></span></p>
+
+<h2>Habilidades</h2>
+
+<table border="1" cellpadding="8">
+    <thead>
+    <tr>
+        <th>Característica</th>
+        <th>Nivel</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="h : ${habilidades}">
+        <td th:text="${h.caracteristica.nombre}"></td>
+        <td th:text="${h.nivel}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div th:if="${oferente.cvNombreArchivo != null}">
+    <br>
+    <a th:href="@{/empresa/candidatos/{id}/cv(id=${oferente.id})}" target="_blank">Ver CV PDF</a>
+</div>
+
+<div th:if="${oferente.cvNombreArchivo == null}">
+    <br>
+    <p>Este candidato no ha subido CV.</p>
+</div>
+
+</body>
+</html>

@@ -15,6 +15,15 @@ import cr.ac.una.proyectobolsaempleo.model.Caracteristica;
 import cr.ac.una.proyectobolsaempleo.model.PuestoCaracteristica;
 import cr.ac.una.proyectobolsaempleo.repository.CaracteristicaRepository;
 import cr.ac.una.proyectobolsaempleo.repository.PuestoCaracteristicaRepository;
+import cr.ac.una.proyectobolsaempleo.model.CandidatoMatch;
+import cr.ac.una.proyectobolsaempleo.model.Oferente;
+import cr.ac.una.proyectobolsaempleo.model.OferenteCaracteristica;
+import cr.ac.una.proyectobolsaempleo.repository.OferenteCaracteristicaRepository;
+import cr.ac.una.proyectobolsaempleo.repository.OferenteRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Comparator;
 
 @Controller
 @RequestMapping("/empresa")
@@ -31,6 +40,12 @@ public class EmpresaController {
 
     @Autowired
     private PuestoCaracteristicaRepository puestoCaracteristicaRepository;
+
+    @Autowired
+    private OferenteRepository oferenteRepository;
+
+    @Autowired
+    private OferenteCaracteristicaRepository oferenteCaracteristicaRepository;
 
     @GetMapping("/dashboard")
     public String dashboardEmpresa() {
@@ -167,4 +182,73 @@ public class EmpresaController {
 
         return "redirect:/empresa/puestos/" + puestoId + "/requisitos";
     }
+
+    @GetMapping("/puestos/{id}/candidatos")
+    public String verCantidatos(@PathVariable Long id, Authentication authentication, Model model) {
+        String correo = authentication.getName();
+        Empresa empresa = empresaRepository.findByUsuarioCorreo(correo).orElse(null);
+        if (empresa == null) {
+            return "redirect:/login";
+        }
+        Puesto puesto = puestoRepository.findByIdAndEmpresaId(id, empresa.getId()).orElse(null);
+        if (puesto == null) {
+            return "redirect:/empresa/puestos";
+        }
+        List<PuestoCaracteristica> requisitos = puestoCaracteristicaRepository.findByPuestoId(puesto.getId());
+        List<Oferente> oferentes = oferenteRepository.findAll();
+        List<CandidatoMatch> candidatos = new ArrayList<>();
+        for (Oferente oferente : oferentes) {
+            if (oferente.getUsuario() == null || !oferente.getUsuario().isActivo()) {
+                continue;
+            }
+            List<OferenteCaracteristica> habilidades = oferenteCaracteristicaRepository.findByOferenteId(oferente.getId());
+            int cumplidos = calcularRequisitosCumplidos(requisitos, habilidades);
+            int total = requisitos.size();
+            int porcentaje;
+            if (total==0){
+                porcentaje = 100;
+            }else{
+                porcentaje = (cumplidos*100)/total;
+            }
+            candidatos.add(new CandidatoMatch(oferente, porcentaje, cumplidos, total));
+        }
+        candidatos.sort(Comparator.comparingInt(CandidatoMatch::getPorcentajeMatch).reversed());
+        model.addAttribute("puesto", puesto);
+        model.addAttribute("candidatos",candidatos);
+        return "empresa/candidatosPuesto";
+    }
+
+    private int calcularRequisitosCumplidos(List<PuestoCaracteristica>requisitos, List<OferenteCaracteristica> habilidades) {
+        int cumplidos = 0;
+        for (PuestoCaracteristica requisito : requisitos) {
+            for (OferenteCaracteristica habilidad : habilidades) {
+                boolean mismaCaracteristica=requisito.getCaracteristica().getId().equals(habilidad.getCaracteristica().getId());
+                boolean nivelSuficiente = habilidad.getNivel() >= requisito.getNivel();
+                if (mismaCaracteristica && nivelSuficiente){
+                    cumplidos++;
+                    break;
+                }
+            }
+        }
+        return cumplidos;
+    }
+
+    @GetMapping("/candidatos/{id}")
+    public String verDetalleCandidato(@PathVariable Long id, Authentication authentication, Model model) {
+        String correo = authentication.getName();
+        Empresa empresa = empresaRepository.findByUsuarioCorreo(correo).orElse(null);
+        if (empresa == null) {
+            return "redirect:/login";
+        }
+        Oferente oferente = oferenteRepository.findById(id).orElse(null);
+        if (oferente == null || oferente.getUsuario() == null || !oferente.getUsuario().isActivo()) {
+            return "redirect:/empresa/puestos";
+        }
+        List<OferenteCaracteristica> habilidades = oferenteCaracteristicaRepository.findByOferenteId(oferente.getId());
+        model.addAttribute("oferente", oferente);
+        model.addAttribute("habilidades", habilidades);
+        return "empresa/detalleCandidato";
+    }
 }
+
+

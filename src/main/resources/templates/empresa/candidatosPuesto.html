@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Candidatos del puesto</title>
+</head>
+<body>
+
+<h1>Candidatos del puesto</h1>
+
+<p><strong>Puesto:</strong> <span th:text="${puesto.titulo}"></span></p>
+
+<a th:href="@{/empresa/puestos}">Volver a mis puestos</a>
+
+<br><br>
+
+<table border="1" cellpadding="8">
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Correo</th>
+        <th>Requisitos cumplidos</th>
+        <th>Match</th>
+        <th>Acción</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c : ${candidatos}">
+        <td th:text="${c.oferente.nombre}"></td>
+        <td th:text="${c.oferente.apellido}"></td>
+        <td th:text="${c.oferente.usuario.correo}"></td>
+        <td>
+            <span th:text="${c.requisitosCumplidos}"></span> /
+            <span th:text="${c.totalRequisitos}"></span>
+        </td>
+        <td th:text="${c.porcentajeMatch + '%'}"></td>
+        <td>
+            <a th:href="@{/empresa/candidatos/{id}(id=${c.oferente.id})}">Ver detalle</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
