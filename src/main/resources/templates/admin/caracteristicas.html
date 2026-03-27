@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Características</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      background-color: #2c3e6b;
+      padding: 14px 40px;
+    }
+
+    nav a {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .pagina {
+      flex: 1;
+      padding: 40px 20px;
+    }
+
+    .contenedor {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #dde3ed;
+      border-radius: 10px;
+      padding: 30px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      color: #2c3e6b;
+      margin-bottom: 4px;
+    }
+
+    .header p {
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    .acciones-superiores {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-link {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .btn-dashboard {
+      background-color: #eaf4fb;
+      color: #1a6da3;
+      border: 1px solid #aed6f1;
+    }
+
+    .btn-dashboard:hover {
+      background-color: #dbeefa;
+    }
+
+    .btn-crear {
+      background-color: #f0b429;
+      color: #333;
+    }
+
+    .btn-crear:hover {
+      background-color: #d9a020;
+    }
+
+    .empty-box {
+      background: #f9fbfd;
+      border: 1px dashed #c9d4e3;
+      border-radius: 10px;
+      padding: 40px 20px;
+      text-align: center;
+      color: #7b8794;
+      font-size: 0.95rem;
+    }
+
+    .grupo {
+      border: 1px solid #e3ebf4;
+      border-radius: 10px;
+      padding: 18px 20px;
+      background-color: #f9fbfd;
+      margin-bottom: 16px;
+    }
+
+    .grupo h3 {
+      color: #2c3e6b;
+      font-size: 1.08rem;
+      margin-bottom: 12px;
+    }
+
+    .lista {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .lista li {
+      padding: 8px 12px;
+      background: white;
+      border: 1px solid #e8edf5;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 0.92rem;
+      color: #444;
+    }
+
+    .sin-sub {
+      color: #888;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    footer {
+      background-color: #2c3e6b;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 16px;
+      font-size: 0.82rem;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a th:href="@{/admin/dashboard}">💼 BolsaEmpleos</a>
+</nav>
+
+<div class="pagina">
+  <div class="contenedor">
+    <div class="card">
+      <div class="header">
+        <div>
+          <h1>Características</h1>
+          <p>Administra las categorías y subcategorías usadas para habilidades y perfiles.</p>
+        </div>
+
+        <div class="acciones-superiores">
+          <a th:href="@{/admin/dashboard}" class="btn-link btn-dashboard">← Dashboard</a>
+          <a th:href="@{/admin/caracteristicas/nueva}" class="btn-link btn-crear">Agregar característica</a>
+        </div>
+      </div>
+
+      <div th:if="${#lists.isEmpty(caracteristicasRaiz)}" class="empty-box">
+        No hay características registradas.
+      </div>
+
+      <div th:each="padre : ${caracteristicasRaiz}" class="grupo">
+        <h3 th:text="${padre.nombre}">Lenguajes de programación</h3>
+
+        <ul class="lista" th:if="${not #lists.isEmpty(padre.hijas)}">
+          <li th:each="hija : ${padre.hijas}" th:text="${hija.nombre}">Java</li>
+        </ul>
+
+        <p class="sin-sub" th:if="${#lists.isEmpty(padre.hijas)}">Sin subcategorías</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 BolsaEmpleos — Todos los derechos reservados
+</footer>
+
+</body>
+</html>

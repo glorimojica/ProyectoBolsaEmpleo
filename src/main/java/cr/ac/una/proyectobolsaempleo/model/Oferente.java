@@ -23,6 +23,9 @@ public class Oferente {
     private String residencia;
     private String nacionalidad;
 
+    @Column(name = "cv_nombre_archivo")
+    private String cvNombreArchivo;
+
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false, unique = true)
     private Usuario usuario;

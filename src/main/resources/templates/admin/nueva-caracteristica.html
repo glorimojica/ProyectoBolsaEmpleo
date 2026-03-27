@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva característica</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #2c3e6b;
+            padding: 14px 40px;
+        }
+
+        nav a {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .pagina {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #dde3ed;
+            border-radius: 10px;
+            padding: 36px 40px;
+            width: 100%;
+            max-width: 560px;
+        }
+
+        .card h1 {
+            font-size: 1.45rem;
+            color: #2c3e6b;
+            margin-bottom: 6px;
+        }
+
+        .subtitulo {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 24px;
+        }
+
+        .alerta-error {
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            margin-bottom: 18px;
+            background: #fdecea;
+            color: #c0392b;
+            border: 1px solid #f5c6c6;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 0.84rem;
+            color: #555;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .campo input,
+        .campo select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background-color: #fafafa;
+        }
+
+        .campo input:focus,
+        .campo select:focus {
+            outline: none;
+            border-color: #4a90d9;
+            background-color: white;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.94rem;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-guardar {
+            background-color: #f0b429;
+            color: #333;
+        }
+
+        .btn-guardar:hover {
+            background-color: #d9a020;
+        }
+
+        .btn-volver {
+            background-color: #eaf4fb;
+            color: #1a6da3;
+            border: 1px solid #aed6f1;
+        }
+
+        .btn-volver:hover {
+            background-color: #dbeefa;
+        }
+
+        footer {
+            background-color: #2c3e6b;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 16px;
+            font-size: 0.82rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a th:href="@{/admin/dashboard}">💼 BolsaEmpleos</a>
+</nav>
+
+<div class="pagina">
+    <div class="card">
+        <h1>Agregar característica</h1>
+        <p class="subtitulo">Crea una nueva característica y asígnala a una categoría principal si lo deseas.</p>
+
+        <div class="alerta-error" th:if="${error}" th:text="${error}"></div>
+
+        <form th:action="@{/admin/caracteristicas}" method="post">
+            <div class="campo">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej. Java" required>
+            </div>
+
+            <div class="campo">
+                <label for="padreId">Padre</label>
+                <select name="padreId" id="padreId">
+                    <option value="">Sin padre</option>
+                    <option th:each="c : ${todas}"
+                            th:value="${c.id}"
+                            th:text="${c.nombreCompleto}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="acciones">
+                <button type="submit" class="btn btn-guardar">Guardar</button>
+                <a th:href="@{/admin/caracteristicas}" class="btn btn-volver">← Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer>
+    © 2025 BolsaEmpleos — Todos los derechos reservados
+</footer>
+
+</body>
+</html>

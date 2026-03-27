@@ -1,8 +1,8 @@
 package cr.ac.una.proyectobolsaempleo.controller;
 
-import cr.ac.una.proyectobolsaempleo.model.Empresa;
-import cr.ac.una.proyectobolsaempleo.model.Oferente;
+import cr.ac.una.proyectobolsaempleo.model.Caracteristica;
 import cr.ac.una.proyectobolsaempleo.model.Usuario;
+import cr.ac.una.proyectobolsaempleo.repository.CaracteristicaRepository;
 import cr.ac.una.proyectobolsaempleo.repository.EmpresaRepository;
 import cr.ac.una.proyectobolsaempleo.repository.OferenteRepository;
 import cr.ac.una.proyectobolsaempleo.repository.UsuarioRepository;
@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -25,6 +23,9 @@ public class AdminController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private CaracteristicaRepository caracteristicaRepository;
 
     @GetMapping("/dashboard")
     public String dashboardAdmin() {
@@ -70,36 +71,75 @@ public class AdminController {
 
         return "redirect:/admin/oferentes-pendientes";
     }
-    @PostMapping("/rechazar-empresa/{usuarioId}")
-    public String rechazarEmpresa(
-            @PathVariable Long usuarioId,
-            @RequestParam("comentario") String comentario) {
 
+    @PostMapping("/rechazar-empresa/{usuarioId}")
+    public String rechazarEmpresa(@PathVariable Long usuarioId,
+                                  @RequestParam("comentario") String comentario) {
         Usuario usuario = usuarioRepository.findById(usuarioId).orElse(null);
 
         if (usuario != null) {
             usuario.setActivo(false);
             usuario.setEstado("RECHAZADO");
-            usuario.setComentarioRevision(comentario);
+            usuario.setComentarioRevision(comentario == null ? null : comentario.trim());
             usuarioRepository.save(usuario);
         }
 
         return "redirect:/admin/empresas-pendientes";
     }
-    @PostMapping("/rechazar-oferente/{usuarioId}")
-    public String rechazarOferente(
-            @PathVariable Long usuarioId,
-            @RequestParam("comentario") String comentario) {
 
+    @PostMapping("/rechazar-oferente/{usuarioId}")
+    public String rechazarOferente(@PathVariable Long usuarioId,
+                                   @RequestParam("comentario") String comentario) {
         Usuario usuario = usuarioRepository.findById(usuarioId).orElse(null);
 
         if (usuario != null) {
             usuario.setActivo(false);
             usuario.setEstado("RECHAZADO");
-            usuario.setComentarioRevision(comentario);
+            usuario.setComentarioRevision(comentario == null ? null : comentario.trim());
             usuarioRepository.save(usuario);
         }
 
         return "redirect:/admin/oferentes-pendientes";
+    }
+
+    @GetMapping("/caracteristicas")
+    public String listarCaracteristicas(Model model) {
+        model.addAttribute("caracteristicasRaiz",
+                caracteristicaRepository.findByPadreIsNullOrderByNombreAsc());
+        return "admin/caracteristicas";
+    }
+
+    @GetMapping("/caracteristicas/nueva")
+    public String formularioNuevaCaracteristica(Model model) {
+        model.addAttribute("todas", caracteristicaRepository.findAllByOrderByNombreAsc());
+        return "admin/nueva-caracteristica";
+    }
+
+    @PostMapping("/caracteristicas")
+    public String guardarCaracteristica(@RequestParam("nombre") String nombre,
+                                        @RequestParam(value = "padreId", required = false) Long padreId,
+                                        Model model) {
+
+        String nombreLimpio = nombre == null ? "" : nombre.trim();
+
+        if (nombreLimpio.isEmpty()) {
+            model.addAttribute("error", "El nombre es obligatorio.");
+            model.addAttribute("todas", caracteristicaRepository.findAllByOrderByNombreAsc());
+            return "admin/nueva-caracteristica";
+        }
+
+        Caracteristica padre = null;
+        if (padreId != null) {
+            padre = caracteristicaRepository.findById(padreId).orElse(null);
+        }
+
+        Caracteristica caracteristica = Caracteristica.builder()
+                .nombre(nombreLimpio)
+                .padre(padre)
+                .build();
+
+        caracteristicaRepository.save(caracteristica);
+
+        return "redirect:/admin/caracteristicas";
     }
 }

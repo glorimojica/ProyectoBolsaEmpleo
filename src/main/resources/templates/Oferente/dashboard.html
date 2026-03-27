@@ -13,17 +13,48 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            color: #333;
         }
 
         nav {
             background: #2c3e6b;
             padding: 14px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
-        nav a {
+        nav .logo {
             color: white;
             text-decoration: none;
             font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        nav .nav-links a {
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.93rem;
+        }
+
+        nav .nav-links a:hover {
+            color: white;
+        }
+
+        nav .nav-links .btn-nav {
+            background-color: rgba(255,255,255,0.12);
+            padding: 8px 14px;
+            border-radius: 6px;
+            color: white;
         }
 
         .pagina {
@@ -44,6 +75,16 @@
             margin-bottom: 25px;
         }
 
+        .hero h1 {
+            margin-bottom: 10px;
+            font-size: 1.7rem;
+        }
+
+        .hero p {
+            color: rgba(255,255,255,0.82);
+            line-height: 1.5;
+        }
+
         .grid {
             display: grid;
             gap: 15px;
@@ -56,17 +97,38 @@
             border: 1px solid #dde3ed;
         }
 
+        .card h3 {
+            color: #2c3e6b;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
         .btn {
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 6px;
             padding: 10px 14px;
             border-radius: 6px;
             text-decoration: none;
             font-size: 0.9rem;
+            border: none;
+            font-family: inherit;
+            cursor: pointer;
         }
 
         .btn-ver { background: #4a90d9; color: white; }
+        .btn-ver:hover { background: #3a7fc5; }
+
         .btn-add { background: #1abc9c; color: white; }
+        .btn-add:hover { background: #17a589; }
+
+        .btn-cv { background: #f0b429; color: #333; }
+        .btn-cv:hover { background: #d9a020; }
 
         .btn-logout {
             background: #eaf4fb;
@@ -74,18 +136,28 @@
             border: 1px solid #aed6f1;
         }
 
+        .btn-logout:hover {
+            background: #dbeefa;
+        }
+
         footer {
             background: #2c3e6b;
             color: rgba(255,255,255,0.5);
             text-align: center;
             padding: 15px;
+            margin-top: 30px;
+            font-size: 0.82rem;
         }
     </style>
 </head>
 <body>
 
 <nav>
-    <a th:href="@{/oferente/dashboard}">💼 BolsaEmpleos</a>
+    <a class="logo" th:href="@{/oferente/dashboard}">💼 BolsaEmpleos</a>
+
+    <div class="nav-links">
+        <a th:href="@{/oferente/cv}" class="btn-nav">Subir / ver CV</a>
+    </div>
 </nav>
 
 <div class="pagina">
@@ -93,7 +165,7 @@
 
         <div class="hero">
             <h1>Bienvenido oferente</h1>
-            <p>Gestiona tus habilidades y mejora tu perfil profesional.</p>
+            <p>Gestiona tus habilidades, fortalece tu perfil y mantén tu currículum actualizado dentro de la plataforma.</p>
         </div>
 
         <div class="grid">
@@ -105,24 +177,27 @@
 
             <div class="card">
                 <h3>Agregar habilidad</h3>
-                <p>Añade nuevas habilidades para mejorar tu perfil.</p>
-                <a th:href="@{/oferente/habilidades/nueva}" class="btn btn-add">Agregar</a>
+                <p>Añade nuevas habilidades para mejorar tu perfil profesional.</p>
+                <a th:href="@{/oferente/habilidades/nueva}" class="btn btn-add">Agregar habilidad</a>
+            </div>
+
+            <div class="card">
+                <h3>Mi CV</h3>
+                <p>Sube tu currículum en PDF o revisa el archivo que ya has cargado en tu perfil.</p>
+                <a th:href="@{/oferente/cv}" class="btn btn-cv">Subir / ver CV</a>
             </div>
 
             <div class="card">
                 <h3>Cerrar sesión</h3>
+                <p>Finaliza tu sesión actual de manera segura cuando hayas terminado.</p>
                 <form th:action="@{/logout}" method="post">
-                    <button class="btn btn-logout">Cerrar sesión</button>
+                    <button class="btn btn-logout" type="submit">Cerrar sesión</button>
                 </form>
             </div>
         </div>
 
     </div>
 </div>
-
-<footer>
-    © 2025 BolsaEmpleos
-</footer>
 
 </body>
 </html>
