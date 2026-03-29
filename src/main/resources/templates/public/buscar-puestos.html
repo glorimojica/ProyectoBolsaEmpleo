@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <title>Buscar puestos públicos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+
+        nav {
+            background-color: #2c3e6b;
+            padding: 14px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        nav .nav-links a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.95rem;
+        }
+
+        nav .nav-links a:hover {
+            color: white;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .encabezado {
+            margin-bottom: 24px;
+        }
+
+        .encabezado h1 {
+            color: #2c3e6b;
+            margin-bottom: 8px;
+        }
+
+        .encabezado p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .filtro-box {
+            background: white;
+            border: 1px solid #dde3ed;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 28px;
+        }
+
+        .filtro-grid {
+            display: grid;
+            grid-template-columns: 1fr 180px auto;
+            gap: 14px;
+            align-items: end;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: #2c3e6b;
+            font-weight: 600;
+        }
+
+        .campo select,
+        .campo input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccd6e0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .btn-buscar {
+            background-color: #2c3e6b;
+            color: white;
+        }
+
+        .btn-limpiar {
+            background-color: #eef3f8;
+            color: #2c3e6b;
+            border: 1px solid #cdd8e4;
+        }
+
+        .resultado-info {
+            margin-bottom: 18px;
+            color: #666;
+            font-size: 0.92rem;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 18px;
+        }
+
+        .job-card {
+            background: white;
+            border: 1px solid #dde3ed;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .job-card h3 {
+            color: #2c3e6b;
+            margin-bottom: 6px;
+            font-size: 1.02rem;
+        }
+
+        .empresa {
+            color: #888;
+            font-size: 0.88rem;
+            margin-bottom: 10px;
+        }
+
+        .descripcion {
+            color: #555;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .salario {
+            font-size: 0.92rem;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.78rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background-color: #e8f5f2;
+            color: #1abc9c;
+            border: 1px solid #b2dfd6;
+        }
+
+        .empty-box {
+            background: white;
+            border: 1px dashed #ccc;
+            border-radius: 12px;
+            padding: 50px;
+            text-align: center;
+            color: #999;
+        }
+
+        footer {
+            background-color: #2c3e6b;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 20px;
+            font-size: 0.82rem;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 800px) {
+            .filtro-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="logo" th:href="@{/}">💼 BolsaEmpleos</a>
+    <div class="nav-links">
+        <a th:href="@{/}">Inicio</a>
+        <a th:href="@{/login}">Iniciar sesión</a>
+    </div>
+</nav>
+
+<div class="contenedor">
+    <div class="encabezado">
+        <h1>Buscar puestos públicos</h1>
+        <p>Filtra oportunidades según la característica y el nivel requerido.</p>
+    </div>
+
+    <div class="filtro-box">
+        <form th:action="@{/buscar-puestos}" method="get">
+            <div class="filtro-grid">
+                <div class="campo">
+                    <label for="caracteristicaId">Característica</label>
+                    <select name="caracteristicaId" id="caracteristicaId">
+                        <option value="">Todas</option>
+                        <option th:each="c : ${caracteristicas}"
+                                th:value="${c.id}"
+                                th:selected="${caracteristicaId != null and caracteristicaId == c.id}"
+                                th:text="${c.nombreCompleto}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="nivel">Nivel mínimo</label>
+                    <input type="number" id="nivel" name="nivel" min="1" max="5" th:value="${nivel}">
+                </div>
+
+                <div class="acciones">
+                    <button type="submit" class="btn btn-buscar">Buscar</button>
+                    <a th:href="@{/buscar-puestos}" class="btn btn-limpiar">Limpiar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <p class="resultado-info">
+        Resultados encontrados:
+        <strong th:text="${#lists.size(puestos)}">0</strong>
+    </p>
+
+    <div class="jobs-grid" th:if="${!#lists.isEmpty(puestos)}">
+        <div class="job-card"
+             th:each="puesto : ${puestos}"
+             th:title="${puesto.descripcion}">
+            <h3 th:text="${puesto.titulo}">Título del puesto</h3>
+            <p class="empresa" th:text="${puesto.empresa.nombre}">Empresa</p>
+            <p class="descripcion" th:text="${puesto.descripcion}">Descripción</p>
+            <p class="salario">
+                <strong>Salario:</strong>
+                <span th:text="${puesto.salario}">0.0</span>
+            </p>
+            <span class="tag">Público</span>
+        </div>
+    </div>
+
+    <div class="empty-box" th:if="${#lists.isEmpty(puestos)}">
+        📋
+        <p>No se encontraron puestos con esos filtros.</p>
+    </div>
+</div>
+
+</body>
+</html>

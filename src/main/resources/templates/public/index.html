@@ -123,6 +123,12 @@
             border: 1px solid #dde3ed;
             border-radius: 10px;
             padding: 20px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.08);
         }
 
         .job-card h3 {
@@ -134,6 +140,19 @@
         .job-card .empresa {
             font-size: 0.85rem;
             color: #888;
+            margin-bottom: 12px;
+        }
+
+        .job-card .descripcion {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .job-card .salario {
+            font-size: 0.9rem;
+            color: #333;
             margin-bottom: 12px;
         }
 
@@ -157,7 +176,10 @@
             grid-column: 1 / -1;
         }
 
-        .empty-box p { margin-top: 8px; font-size: 0.9rem; }
+        .empty-box p {
+            margin-top: 8px;
+            font-size: 0.9rem;
+        }
 
         footer {
             background-color: #2c3e6b;
@@ -175,6 +197,7 @@
     <a class="logo" th:href="@{/}">💼 BolsaEmpleos</a>
     <div class="nav-links">
         <a href="#ofertas">Ofertas</a>
+        <a th:href="@{/buscar-puestos}">Buscar puestos</a>
         <a th:href="@{/registro/empresa}">Para empresas</a>
         <a th:href="@{/login}" class="btn-nav">Iniciar sesión</a>
     </div>
@@ -192,18 +215,31 @@
 
 <div class="contenedor" id="ofertas">
     <p class="seccion-titulo">Puestos recientes</p>
-    <p class="seccion-sub">Últimas oportunidades publicadas en la plataforma</p>
+    <p class="seccion-sub">Últimas oportunidades públicas publicadas en la plataforma</p>
 
     <div class="jobs-grid">
-        <!-- th:each="puesto : ${puestos}"
-        <div class="job-card">
-            <h3 th:text="${puesto.titulo}">Título del puesto</h3>
-            <p class="empresa" th:text="${puesto.empresa}">Empresa</p>
-            <span class="tag" th:text="${puesto.ubicacion}">Ubicación</span>
-        </div>
-        -->
 
-        <div class="empty-box">
+        <div class="job-card"
+             th:each="puesto : ${puestos}"
+             th:title="${puesto.descripcion}">
+
+            <h3 th:text="${puesto.titulo}">Título del puesto</h3>
+
+            <p class="empresa" th:text="${puesto.empresa.nombre}">Empresa</p>
+
+            <p class="descripcion" th:text="${puesto.descripcion}">
+                Descripción del puesto
+            </p>
+
+            <p class="salario">
+                <strong>Salario:</strong>
+                <span th:text="${puesto.salario}">0.0</span>
+            </p>
+
+            <span class="tag">Público</span>
+        </div>
+
+        <div class="empty-box" th:if="${#lists.isEmpty(puestos)}">
             📋
             <p>Aquí aparecerán los puestos disponibles próximamente.</p>
         </div>
