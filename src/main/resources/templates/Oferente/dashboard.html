@@ -5,20 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Candidato</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: #f0f4f8;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            background-color: #f4f6f8;
             color: #333;
+            min-height: 100vh;
         }
 
         nav {
-            background: #2c3e6b;
-            padding: 14px 40px;
+            background-color: #1f2937;
+            padding: 14px 30px;
+        }
+
+        .nav-contenido {
+            max-width: 1000px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -26,176 +33,162 @@
             flex-wrap: wrap;
         }
 
-        nav .logo {
+        .logo {
             color: white;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
+            font-weight: 600;
         }
 
-        nav .nav-links {
+        .nav-links {
             display: flex;
-            gap: 14px;
+            gap: 16px;
             flex-wrap: wrap;
-            align-items: center;
         }
 
-        nav .nav-links a {
+        .nav-links a {
             color: rgba(255,255,255,0.88);
             text-decoration: none;
-            font-size: 0.93rem;
+            font-size: 0.92rem;
         }
 
-        nav .nav-links a:hover {
-            color: white;
-        }
-
-        nav .nav-links .btn-nav {
-            background-color: rgba(255,255,255,0.12);
-            padding: 8px 14px;
-            border-radius: 6px;
+        .nav-links a:hover {
             color: white;
         }
 
         .pagina {
-            flex: 1;
-            padding: 40px 20px;
+            padding: 36px 20px;
         }
 
         .contenedor {
             max-width: 900px;
-            margin: auto;
+            margin: 0 auto;
         }
 
-        .hero {
-            background: #2c3e6b;
-            color: white;
-            padding: 30px;
+        .card-principal {
+            background: white;
+            border: 1px solid #d9e1e7;
             border-radius: 10px;
-            margin-bottom: 25px;
+            padding: 28px;
+            margin-bottom: 20px;
         }
 
-        .hero h1 {
-            margin-bottom: 10px;
-            font-size: 1.7rem;
+        .card-principal h1 {
+            font-size: 1.5rem;
+            color: #22364d;
+            margin-bottom: 8px;
         }
 
-        .hero p {
-            color: rgba(255,255,255,0.82);
+        .card-principal p {
+            color: #6b7280;
+            font-size: 0.92rem;
             line-height: 1.5;
         }
 
         .grid {
             display: grid;
-            gap: 15px;
+            gap: 16px;
         }
 
-        .card {
+        .opcion {
             background: white;
-            padding: 20px;
+            border: 1px solid #d9e1e7;
             border-radius: 10px;
-            border: 1px solid #dde3ed;
+            padding: 22px;
         }
 
-        .card h3 {
-            color: #2c3e6b;
+        .opcion h2 {
+            font-size: 1.06rem;
+            color: #22364d;
             margin-bottom: 8px;
         }
 
-        .card p {
-            color: #666;
+        .opcion p {
+            color: #6b7280;
             font-size: 0.92rem;
             line-height: 1.5;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .btn {
             display: inline-block;
-            margin-top: 6px;
             padding: 10px 14px;
             border-radius: 6px;
             text-decoration: none;
-            font-size: 0.9rem;
-            border: none;
-            font-family: inherit;
+            font-size: 0.92rem;
+            border: 1px solid transparent;
             cursor: pointer;
+            font-family: inherit;
         }
 
-        .btn-ver { background: #4a90d9; color: white; }
-        .btn-ver:hover { background: #3a7fc5; }
-
-        .btn-add { background: #1abc9c; color: white; }
-        .btn-add:hover { background: #17a589; }
-
-        .btn-cv { background: #f0b429; color: #333; }
-        .btn-cv:hover { background: #d9a020; }
-
-        .btn-logout {
-            background: #eaf4fb;
-            color: #1a6da3;
-            border: 1px solid #aed6f1;
+        .btn-principal {
+            background-color: #2f6fad;
+            color: white;
         }
 
-        .btn-logout:hover {
-            background: #dbeefa;
+        .btn-principal:hover {
+            background-color: #275e92;
         }
 
-        footer {
-            background: #2c3e6b;
-            color: rgba(255,255,255,0.5);
-            text-align: center;
-            padding: 15px;
-            margin-top: 30px;
-            font-size: 0.82rem;
+        .btn-secundario {
+            background-color: #eef3f7;
+            color: #27405d;
+            border-color: #cfd9e3;
+        }
+
+        .btn-secundario:hover {
+            background-color: #e3ebf2;
         }
     </style>
 </head>
 <body>
 
 <nav>
-    <a class="logo" th:href="@{/oferente/dashboard}">💼 BolsaEmpleos</a>
+    <div class="nav-contenido">
+        <a class="logo" th:href="@{/oferente/dashboard}">BolsaEmpleo</a>
 
-    <div class="nav-links">
-        <a th:href="@{/oferente/cv}" class="btn-nav">Subir / ver CV</a>
+        <div class="nav-links">
+            <a th:href="@{/oferente/dashboard}">Dashboard</a>
+            <a th:href="@{/oferente/habilidades}">Mis habilidades</a>
+            <a th:href="@{/oferente/cv}">Mi CV</a>
+        </div>
     </div>
 </nav>
 
 <div class="pagina">
     <div class="contenedor">
-
-        <div class="hero">
-            <h1>Bienvenido oferente</h1>
-            <p>Gestiona tus habilidades, fortalece tu perfil y mantén tu currículum actualizado dentro de la plataforma.</p>
+        <div class="card-principal">
+            <h1>Candidato - dashboard</h1>
+            <p>Desde aquí puedes administrar tus habilidades y mantener actualizado tu currículum.</p>
         </div>
 
         <div class="grid">
-            <div class="card">
-                <h3>Mis habilidades</h3>
-                <p>Consulta y administra tus habilidades registradas.</p>
-                <a th:href="@{/oferente/habilidades}" class="btn btn-ver">Ver habilidades</a>
+            <div class="opcion">
+                <h2>Mis habilidades</h2>
+                <p>Consulta las habilidades que ya registraste en tu perfil.</p>
+                <a th:href="@{/oferente/habilidades}" class="btn btn-principal">Ver habilidades</a>
             </div>
 
-            <div class="card">
-                <h3>Agregar habilidad</h3>
-                <p>Añade nuevas habilidades para mejorar tu perfil profesional.</p>
-                <a th:href="@{/oferente/habilidades/nueva}" class="btn btn-add">Agregar habilidad</a>
+            <div class="opcion">
+                <h2>Agregar habilidad</h2>
+                <p>Registra una nueva habilidad con el nivel correspondiente.</p>
+                <a th:href="@{/oferente/habilidades/nueva}" class="btn btn-principal">Agregar habilidad</a>
             </div>
 
-            <div class="card">
-                <h3>Mi CV</h3>
-                <p>Sube tu currículum en PDF o revisa el archivo que ya has cargado en tu perfil.</p>
-                <a th:href="@{/oferente/cv}" class="btn btn-cv">Subir / ver CV</a>
+            <div class="opcion">
+                <h2>Mi CV</h2>
+                <p>Sube tu currículum o revisa el archivo que ya está cargado.</p>
+                <a th:href="@{/oferente/cv}" class="btn btn-principal">Ir a CV</a>
             </div>
 
-            <div class="card">
-                <h3>Cerrar sesión</h3>
-                <p>Finaliza tu sesión actual de manera segura cuando hayas terminado.</p>
+            <div class="opcion">
+                <h2>Cerrar sesión</h2>
+                <p>Finaliza la sesión cuando hayas terminado.</p>
                 <form th:action="@{/logout}" method="post">
-                    <button class="btn btn-logout" type="submit">Cerrar sesión</button>
+                    <button class="btn btn-secundario" type="submit">Cerrar sesión</button>
                 </form>
             </div>
         </div>
-
     </div>
 </div>
 

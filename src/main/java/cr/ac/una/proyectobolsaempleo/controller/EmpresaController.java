@@ -20,6 +20,7 @@ import cr.ac.una.proyectobolsaempleo.model.Oferente;
 import cr.ac.una.proyectobolsaempleo.model.OferenteCaracteristica;
 import cr.ac.una.proyectobolsaempleo.repository.OferenteCaracteristicaRepository;
 import cr.ac.una.proyectobolsaempleo.repository.OferenteRepository;
+import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,23 +69,20 @@ public class EmpresaController {
         model.addAttribute("puesto", new Puesto());
         return "empresa/crearPuesto";
     }
-
     @PostMapping("/puestos")
-    public String guardarPuesto(@ModelAttribute Puesto puesto, Authentication authentication, Model model) {
+    public String guardarPuesto(@ModelAttribute Puesto puesto, Authentication authentication) {
         String correo = authentication.getName();
         Empresa empresa = empresaRepository.findByUsuarioCorreo(correo).orElse(null);
-        if (empresa == null) {
+
+        if (empresa == null || !empresa.getUsuario().isActivo()) {
             return "redirect:/login";
         }
-        if (puesto.getSalario() == null || puesto.getSalario() <= 0) {
-            model.addAttribute("error", "El salario debe ser mayor a 0.");
-            model.addAttribute("puesto", puesto);
-            return "empresa/crearPuesto";
-        }
+
         puesto.setEmpresa(empresa);
         puesto.setActivo(true);
-        puestoRepository.save(puesto);
+        puesto.setFechaCreacion(LocalDateTime.now());
 
+        puestoRepository.save(puesto);
         return "redirect:/empresa/puestos";
     }
 

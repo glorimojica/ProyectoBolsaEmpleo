@@ -13,51 +13,83 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            background-color: #f0f4f8;
+            background-color: #f4f6f8;
             color: #333;
-            display: flex;
-            flex-direction: column;
             min-height: 100vh;
         }
 
         nav {
-            background-color: #2c3e6b;
-            padding: 14px 40px;
+            background-color: #1f2937;
+            padding: 14px 30px;
         }
 
-        nav a {
+        .nav-contenido {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
             color: white;
-            font-size: 1.1rem;
-            font-weight: bold;
             text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
         }
 
         .pagina {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            padding: 40px 20px;
+            padding: 36px 20px;
+        }
+
+        .contenedor {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .card {
             background: white;
-            border: 1px solid #dde3ed;
+            border: 1px solid #d9e1e7;
             border-radius: 10px;
-            padding: 36px 40px;
-            width: 100%;
-            max-width: 700px;
+            padding: 28px;
         }
 
-        .card h1 {
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .header h1 {
             font-size: 1.5rem;
-            color: #2c3e6b;
+            color: #22364d;
             margin-bottom: 6px;
         }
 
-        .subtitulo {
-            font-size: 0.9rem;
-            color: #777;
-            margin-bottom: 24px;
+        .header p {
+            color: #6b7280;
+            font-size: 0.92rem;
         }
 
         .detalle {
@@ -66,28 +98,26 @@
         }
 
         .item {
-            background-color: #f9fbfd;
-            border: 1px solid #e3ebf4;
+            background-color: #fafbfd;
+            border: 1px solid #e3e8ee;
             border-radius: 8px;
-            padding: 14px 16px;
+            padding: 14px;
         }
 
         .item strong {
             display: block;
             font-size: 0.82rem;
-            color: #2c3e6b;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
+            color: #32465a;
+            margin-bottom: 6px;
         }
 
         .item span {
-            font-size: 0.96rem;
-            color: #444;
+            font-size: 0.94rem;
+            color: #333;
             line-height: 1.5;
         }
 
-        .estado {
+        .badge {
             display: inline-block;
             padding: 5px 10px;
             border-radius: 20px;
@@ -95,106 +125,105 @@
             font-weight: 600;
         }
 
-        .estado-activo {
-            background-color: #eafaf1;
-            color: #1e8449;
-            border: 1px solid #a9dfbf;
+        .badge-publico {
+            background-color: #e8f0f8;
+            color: #2f6fad;
+            border: 1px solid #c6d8ea;
         }
 
-        .estado-inactivo {
-            background-color: #fdecea;
-            color: #c0392b;
-            border: 1px solid #f5c6c6;
+        .badge-privado {
+            background-color: #efefef;
+            color: #555;
+            border: 1px solid #d6d6d6;
         }
 
-        .tipo-publico {
-            background-color: #eaf4fb;
-            color: #1a6da3;
-            border: 1px solid #aed6f1;
+        .badge-activo {
+            background-color: #eaf7ef;
+            color: #2f855a;
+            border: 1px solid #c7e5d3;
         }
 
-        .tipo-privado {
-            background-color: #fef5e7;
-            color: #b9770e;
-            border: 1px solid #f9e0a8;
+        .badge-inactivo {
+            background-color: #fdeeee;
+            color: #c53030;
+            border: 1px solid #f2c6c6;
         }
 
-        .acciones {
-            margin-top: 24px;
-        }
-
-        .acciones a {
+        .btn {
             display: inline-block;
-            padding: 10px 16px;
+            padding: 10px 14px;
             border-radius: 6px;
-            background-color: #4a90d9;
-            color: white;
             text-decoration: none;
             font-size: 0.92rem;
-            font-weight: 500;
+            border: 1px solid #cfd9e3;
+            background-color: #eef3f7;
+            color: #27405d;
         }
 
-        .acciones a:hover {
-            background-color: #3a7fc5;
-        }
-
-        footer {
-            background-color: #2c3e6b;
-            color: rgba(255,255,255,0.5);
-            text-align: center;
-            padding: 16px;
-            font-size: 0.82rem;
-            margin-top: 30px;
+        .btn:hover {
+            background-color: #e3ebf2;
         }
     </style>
 </head>
 <body>
 
 <nav>
-    <a th:href="@{/empresa/dashboard}">💼 BolsaEmpleos</a>
+    <div class="nav-contenido">
+        <a class="logo" th:href="@{/empresa/dashboard}">BolsaEmpleo</a>
+
+        <div class="nav-links">
+            <a th:href="@{/empresa/dashboard}">Dashboard</a>
+            <a th:href="@{/empresa/puestos}">Mis puestos</a>
+            <a th:href="@{/empresa/puestos/nuevo}">Publicar puesto</a>
+        </div>
+    </div>
 </nav>
 
 <div class="pagina">
-    <div class="card">
-        <h1>Detalle del puesto</h1>
-        <p class="subtitulo">Consulta la información completa del puesto publicado.</p>
+    <div class="contenedor">
+        <div class="card">
+            <div class="header">
+                <div>
+                    <h1>Detalle del puesto</h1>
+                    <p>Información general de la vacante publicada.</p>
+                </div>
 
-        <div class="detalle">
-            <div class="item">
-                <strong>ID</strong>
-                <span th:text="${puesto.id}">1</span>
+                <a th:href="@{/empresa/puestos}" class="btn">Volver</a>
             </div>
 
-            <div class="item">
-                <strong>Título</strong>
-                <span th:text="${puesto.titulo}">Desarrollador Java</span>
-            </div>
+            <div class="detalle">
+                <div class="item">
+                    <strong>ID</strong>
+                    <span th:text="${puesto.id}">1</span>
+                </div>
 
-            <div class="item">
-                <strong>Descripción</strong>
-                <span th:text="${puesto.descripcion}">Descripción del puesto</span>
-            </div>
+                <div class="item">
+                    <strong>Título</strong>
+                    <span th:text="${puesto.titulo}">Desarrollador Java</span>
+                </div>
 
-            <div class="item">
-                <strong>Salario</strong>
-                <span th:text="${puesto.salario}">850000</span>
-            </div>
+                <div class="item">
+                    <strong>Descripción</strong>
+                    <span th:text="${puesto.descripcion}">Descripción del puesto</span>
+                </div>
 
-            <div class="item">
-                <strong>Tipo de publicación</strong>
-                <span th:class="${puesto.publico} ? 'estado tipo-publico' : 'estado tipo-privado'"
-                      th:text="${puesto.publico} ? 'Público' : 'Privado'">Público</span>
-            </div>
+                <div class="item">
+                    <strong>Salario</strong>
+                    <span th:text="${puesto.salario}">850000</span>
+                </div>
 
-            <div class="item">
-                <strong>Estado</strong>
-                <span th:class="${puesto.activo} ? 'estado estado-activo' : 'estado estado-inactivo'"
-                      th:text="${puesto.activo} ? 'Activo' : 'Inactivo'">Activo</span>
-            </div>
-        </div>
+                <div class="item">
+                    <strong>Tipo de publicación</strong>
+                    <span th:class="${puesto.publico} ? 'badge badge-publico' : 'badge badge-privado'"
+                          th:text="${puesto.publico} ? 'Público' : 'Privado'">Público</span>
+                </div>
 
-        <div class="acciones">
-            <a th:href="@{/empresa/puestos}">← Volver a mis puestos</a>
+                <div class="item">
+                    <strong>Estado</strong>
+                    <span th:class="${puesto.activo} ? 'badge badge-activo' : 'badge badge-inactivo'"
+                          th:text="${puesto.activo} ? 'Activo' : 'Inactivo'">Activo</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

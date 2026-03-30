@@ -13,62 +13,86 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, sans-serif;
-      background-color: #f0f4f8;
+      background-color: #f4f6f8;
       color: #333;
-      display: flex;
-      flex-direction: column;
       min-height: 100vh;
     }
 
     nav {
-      background-color: #2c3e6b;
-      padding: 14px 40px;
+      background-color: #1f2937;
+      padding: 14px 30px;
     }
 
-    nav a {
+    .nav-contenido {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
       color: white;
-      font-size: 1.1rem;
-      font-weight: bold;
       text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+
+    .nav-links a:hover {
+      color: white;
     }
 
     .pagina {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 20px;
+      padding: 36px 20px;
+    }
+
+    .contenedor {
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     .card {
       background: white;
-      border: 1px solid #dde3ed;
+      border: 1px solid #d9e1e7;
       border-radius: 10px;
-      padding: 36px 40px;
-      width: 100%;
-      max-width: 560px;
+      padding: 28px;
     }
 
     .card h1 {
       font-size: 1.45rem;
-      color: #2c3e6b;
+      color: #22364d;
       margin-bottom: 6px;
     }
 
     .subtitulo {
-      font-size: 0.9rem;
-      color: #777;
-      margin-bottom: 24px;
+      color: #6b7280;
+      font-size: 0.92rem;
+      margin-bottom: 22px;
+      line-height: 1.5;
     }
 
     .alerta-error {
-      padding: 10px 14px;
-      border-radius: 6px;
-      font-size: 0.88rem;
+      background: #fdeeee;
+      color: #c53030;
+      border: 1px solid #f2c6c6;
+      padding: 12px 14px;
+      border-radius: 8px;
       margin-bottom: 18px;
-      background: #fdecea;
-      color: #c0392b;
-      border: 1px solid #f5c6c6;
+      font-size: 0.92rem;
     }
 
     .campo {
@@ -86,116 +110,100 @@
     .campo input[type="file"] {
       width: 100%;
       padding: 10px 12px;
-      border: 1px solid #ccc;
+      border: 1px solid #ccd4dd;
       border-radius: 6px;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       font-family: inherit;
-      background-color: #fafafa;
-    }
-
-    .campo input[type="file"]:focus {
-      outline: none;
-      border-color: #4a90d9;
-      background-color: white;
+      background-color: #fafbfd;
     }
 
     .acciones {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-top: 10px;
     }
 
     .btn {
-      padding: 11px 18px;
-      border: none;
-      border-radius: 6px;
-      font-size: 0.94rem;
-      font-family: inherit;
-      cursor: pointer;
-      text-decoration: none;
-      font-weight: 500;
       display: inline-block;
+      padding: 10px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.92rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
     }
 
-    .btn-subir {
-      background-color: #f0b429;
-      color: #333;
-    }
-
-    .btn-subir:hover {
-      background-color: #d9a020;
-    }
-
-    .btn-volver {
-      background-color: #eaf4fb;
-      color: #1a6da3;
-      border: 1px solid #aed6f1;
-    }
-
-    .btn-volver:hover {
-      background-color: #dbeefa;
-    }
-
-    .btn-ver {
-      background-color: #1abc9c;
+    .btn-principal {
+      background-color: #2f6fad;
       color: white;
-      margin-top: 18px;
     }
 
-    .btn-ver:hover {
-      background-color: #17a589;
+    .btn-principal:hover {
+      background-color: #275e92;
     }
 
-    .cv-actual {
-      margin-top: 20px;
+    .btn-secundario {
+      background-color: #eef3f7;
+      color: #27405d;
+      border-color: #cfd9e3;
+    }
+
+    .btn-secundario:hover {
+      background-color: #e3ebf2;
+    }
+
+    .bloque {
+      margin-top: 22px;
       padding-top: 18px;
-      border-top: 1px solid #eee;
+      border-top: 1px solid #e8edf2;
     }
 
-    .cv-actual p {
-      color: #666;
-      font-size: 0.9rem;
-      margin-bottom: 10px;
-    }
-
-    footer {
-      background-color: #2c3e6b;
-      color: rgba(255,255,255,0.5);
-      text-align: center;
-      padding: 16px;
-      font-size: 0.82rem;
+    .bloque p {
+      color: #6b7280;
+      font-size: 0.92rem;
+      margin-bottom: 12px;
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <a th:href="@{/oferente/dashboard}">💼 BolsaEmpleos</a>
+  <div class="nav-contenido">
+    <a class="logo" th:href="@{/oferente/dashboard}">BolsaEmpleo</a>
+
+    <div class="nav-links">
+      <a th:href="@{/oferente/dashboard}">Dashboard</a>
+      <a th:href="@{/oferente/habilidades}">Mis habilidades</a>
+      <a th:href="@{/oferente/cv}">Mi CV</a>
+    </div>
+  </div>
 </nav>
 
 <div class="pagina">
-  <div class="card">
-    <h1>Currículum</h1>
-    <p class="subtitulo">Sube tu CV en formato PDF para complementar tu perfil dentro de la plataforma.</p>
+  <div class="contenedor">
+    <div class="card">
+      <h1>Mi CV</h1>
+      <p class="subtitulo">Adjunta tu currículum en formato PDF.</p>
 
-    <div class="alerta-error" th:if="${error}" th:text="${error}"></div>
+      <div class="alerta-error" th:if="${error}" th:text="${error}"></div>
 
-    <form th:action="@{/oferente/cv}" method="post" enctype="multipart/form-data">
-      <div class="campo">
-        <label for="archivo">Archivo PDF</label>
-        <input type="file" id="archivo" name="archivo" accept="application/pdf" required>
+      <form th:action="@{/oferente/cv}" method="post" enctype="multipart/form-data">
+        <div class="campo">
+          <label for="archivo">Archivo PDF</label>
+          <input type="file" id="archivo" name="archivo" accept="application/pdf" required>
+        </div>
+
+        <div class="acciones">
+          <button type="submit" class="btn btn-principal">Subir CV</button>
+          <a th:href="@{/oferente/dashboard}" class="btn btn-secundario">Volver</a>
+        </div>
+      </form>
+
+      <div class="bloque" th:if="${oferente.cvNombreArchivo != null}">
+        <p>Ya tienes un archivo cargado.</p>
+        <a th:href="@{/oferente/cv/ver}" target="_blank" class="btn btn-principal">Ver CV actual</a>
       </div>
-
-      <div class="acciones">
-        <button type="submit" class="btn btn-subir">Subir CV</button>
-        <a th:href="@{/oferente/dashboard}" class="btn btn-volver">← Volver</a>
-      </div>
-    </form>
-
-    <div class="cv-actual" th:if="${oferente.cvNombreArchivo != null}">
-      <p>Ya tienes un currículum cargado en tu perfil.</p>
-      <a th:href="@{/oferente/cv/ver}" target="_blank" class="btn btn-ver">Ver CV actual</a>
     </div>
   </div>
 </div>

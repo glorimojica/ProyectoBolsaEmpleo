@@ -5,147 +5,243 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis habilidades</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            background-color: #f0f4f8;
+            background-color: #f4f6f8;
+            color: #333;
+            min-height: 100vh;
         }
 
         nav {
-            background-color: #2c3e6b;
-            padding: 14px 40px;
+            background-color: #1f2937;
+            padding: 14px 30px;
         }
 
-        nav a {
+        .nav-contenido {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
             color: white;
-            font-weight: bold;
             text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
         }
 
         .pagina {
-            padding: 40px 20px;
+            padding: 36px 20px;
         }
 
         .contenedor {
-            max-width: 900px;
-            margin: auto;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .card {
             background: white;
-            border: 1px solid #dde3ed;
+            border: 1px solid #d9e1e7;
             border-radius: 10px;
-            padding: 25px;
+            padding: 28px;
         }
 
-        h1 {
-            color: #2c3e6b;
-            margin-bottom: 10px;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            color: #22364d;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            color: #6b7280;
+            font-size: 0.92rem;
         }
 
         .acciones {
-            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 8px 14px;
+            display: inline-block;
+            padding: 10px 14px;
             border-radius: 6px;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-family: inherit;
         }
 
-        .btn-add {
-            background: #1abc9c;
+        .btn-principal {
+            background-color: #2f6fad;
             color: white;
         }
 
-        .btn-back {
-            background: #eaf4fb;
-            color: #1a6da3;
-            border: 1px solid #aed6f1;
+        .btn-principal:hover {
+            background-color: #275e92;
+        }
+
+        .btn-secundario {
+            background-color: #eef3f7;
+            color: #27405d;
+            border-color: #cfd9e3;
+        }
+
+        .btn-secundario:hover {
+            background-color: #e3ebf2;
+        }
+
+        .btn-danger {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #c64541;
+        }
+
+        .tabla-wrapper {
+            overflow-x: auto;
+            border: 1px solid #dde3ea;
+            border-radius: 8px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 700px;
+            background: white;
         }
 
         thead {
-            background: #2c3e6b;
-            color: white;
+            background-color: #f3f5f7;
         }
 
         th, td {
             padding: 12px;
-            border-bottom: 1px solid #eee;
+            text-align: left;
+            border-bottom: 1px solid #e7edf2;
+            font-size: 0.92rem;
         }
 
-        .btn-delete {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 5px;
-            cursor: pointer;
+        th {
+            color: #32465a;
+            font-weight: 600;
         }
 
-        footer {
-            background-color: #2c3e6b;
-            color: rgba(255,255,255,0.5);
+        tbody tr:nth-child(even) {
+            background-color: #fafbfd;
+        }
+
+        .empty-box {
+            background: #fafbfd;
+            border: 1px dashed #c7d1dc;
+            border-radius: 8px;
+            padding: 30px 20px;
             text-align: center;
-            padding: 16px;
-            margin-top: 40px;
+            color: #6b7280;
+            font-size: 0.94rem;
         }
     </style>
 </head>
 <body>
 
 <nav>
-    <a th:href="@{/oferente/dashboard}">💼 BolsaEmpleos</a>
+    <div class="nav-contenido">
+        <a class="logo" th:href="@{/oferente/dashboard}">BolsaEmpleo</a>
+
+        <div class="nav-links">
+            <a th:href="@{/oferente/dashboard}">Dashboard</a>
+            <a th:href="@{/oferente/habilidades}">Mis habilidades</a>
+            <a th:href="@{/oferente/cv}">Mi CV</a>
+        </div>
+    </div>
 </nav>
 
 <div class="pagina">
     <div class="contenedor">
         <div class="card">
+            <div class="header">
+                <div>
+                    <h1>Mis habilidades</h1>
+                    <p>Consulta las habilidades registradas en tu perfil.</p>
+                </div>
 
-            <h1>Mis habilidades</h1>
-
-            <div class="acciones">
-                <a th:href="@{/oferente/dashboard}" class="btn btn-back">← Dashboard</a>
-                <a th:href="@{/oferente/habilidades/nueva}" class="btn btn-add">Agregar habilidad</a>
+                <div class="acciones">
+                    <a th:href="@{/oferente/dashboard}" class="btn btn-secundario">Volver</a>
+                    <a th:href="@{/oferente/habilidades/nueva}" class="btn btn-principal">Agregar habilidad</a>
+                </div>
             </div>
 
-            <table>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Característica</th>
-                    <th>Nivel</th>
-                    <th>Acción</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="h : ${habilidades}">
-                    <td th:text="${h.id}"></td>
-                    <td th:text="${h.caracteristica.nombre}"></td>
-                    <td th:text="${h.nivel}"></td>
-                    <td>
-                        <form th:action="@{/oferente/habilidades/{id}/eliminar(id=${h.id})}" method="post">
-                            <button class="btn-delete">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div th:if="${#lists.isEmpty(habilidades)}" class="empty-box">
+                No has agregado habilidades todavía.
+            </div>
 
+            <div th:if="${not #lists.isEmpty(habilidades)}" class="tabla-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Característica</th>
+                        <th>Nivel</th>
+                        <th>Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="h : ${habilidades}">
+                        <td th:text="${h.id}">1</td>
+                        <td th:text="${h.caracteristica.nombre}">Java</td>
+                        <td th:text="${h.nivel}">4</td>
+                        <td>
+                            <form th:action="@{/oferente/habilidades/{id}/eliminar(id=${h.id})}" method="post">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
-
-<footer>
-    © 2025 BolsaEmpleos
-</footer>
 
 </body>
 </html>

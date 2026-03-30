@@ -13,28 +13,52 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            background-color: #f0f4f8;
+            background-color: #f4f6f8;
             color: #333;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
         nav {
-            background-color: #2c3e6b;
-            padding: 14px 40px;
+            background-color: #1f2937;
+            padding: 14px 30px;
         }
 
-        nav a {
+        .nav-contenido {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
             color: white;
-            font-size: 1.1rem;
-            font-weight: bold;
             text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
         }
 
         .pagina {
-            flex: 1;
-            padding: 40px 20px;
+            padding: 36px 20px;
         }
 
         .contenedor {
@@ -42,127 +66,127 @@
             margin: 0 auto;
         }
 
-        .hero {
-            background-color: #2c3e6b;
-            color: white;
-            border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 28px;
+        .card-principal {
+            background: white;
+            border: 1px solid #d9e1e7;
+            border-radius: 10px;
+            padding: 28px;
+            margin-bottom: 20px;
         }
 
-        .hero h1 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+        .card-principal h1 {
+            font-size: 1.55rem;
+            color: #22364d;
+            margin-bottom: 8px;
         }
 
-        .hero p {
-            color: rgba(255,255,255,0.8);
-            font-size: 1rem;
+        .card-principal p {
+            color: #6b7280;
+            font-size: 0.93rem;
+            line-height: 1.5;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
         }
 
         .opcion {
             background: white;
-            border: 1px solid #dde3ed;
+            border: 1px solid #d9e1e7;
             border-radius: 10px;
-            padding: 24px;
+            padding: 22px;
         }
 
         .opcion h2 {
-            font-size: 1.1rem;
-            color: #2c3e6b;
+            font-size: 1.08rem;
+            color: #22364d;
             margin-bottom: 8px;
         }
 
         .opcion p {
             font-size: 0.92rem;
-            color: #666;
+            color: #6b7280;
             line-height: 1.5;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .btn {
             display: inline-block;
-            padding: 10px 16px;
+            padding: 10px 14px;
             border-radius: 6px;
             text-decoration: none;
             font-size: 0.92rem;
-            font-weight: 500;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-family: inherit;
         }
 
-        .btn-ver {
-            background-color: #4a90d9;
+        .btn-principal {
+            background-color: #2f6fad;
             color: white;
         }
 
-        .btn-ver:hover {
-            background-color: #3a7fc5;
+        .btn-principal:hover {
+            background-color: #275e92;
         }
 
-        .btn-crear {
-            background-color: #f0b429;
-            color: #333;
+        .btn-secundario {
+            background-color: #eef3f7;
+            color: #27405d;
+            border-color: #cfd9e3;
         }
 
-        .btn-crear:hover {
-            background-color: #d9a020;
+        .btn-secundario:hover {
+            background-color: #e3ebf2;
         }
 
-        .btn-logout {
-            background-color: #eaf4fb;
-            color: #1a6da3;
-            border: 1px solid #aed6f1;
-        }
-
-        .btn-logout:hover {
-            background-color: #dbeefa;
-        }
-
-        footer {
-            background-color: #2c3e6b;
-            color: rgba(255,255,255,0.5);
-            text-align: center;
-            padding: 16px;
-            font-size: 0.82rem;
-            margin-top: 30px;
+        form {
+            display: inline;
         }
     </style>
 </head>
 <body>
 
 <nav>
-    <a th:href="@{/empresa/dashboard}">💼 BolsaEmpleos</a>
+    <div class="nav-contenido">
+        <a class="logo" th:href="@{/empresa/dashboard}">BolsaEmpleo</a>
+
+        <div class="nav-links">
+            <a th:href="@{/empresa/dashboard}">Dashboard</a>
+            <a th:href="@{/empresa/puestos}">Mis puestos</a>
+            <a th:href="@{/empresa/puestos/nuevo}">Publicar puesto</a>
+        </div>
+    </div>
 </nav>
 
 <div class="pagina">
     <div class="contenedor">
-        <div class="hero">
-            <h1>Bienvenido, empresa</h1>
-            <p>Desde aquí puedes administrar tus puestos, crear nuevas publicaciones y gestionar tu cuenta de manera sencilla.</p>
+        <div class="card-principal">
+            <h1>Empresa - dashboard</h1>
+            <p>Desde aquí puedes administrar tus puestos y revisar los candidatos asociados a cada publicación.</p>
         </div>
 
         <div class="grid">
             <div class="opcion">
                 <h2>Mis puestos</h2>
-                <p>Consulta todos los puestos que has creado, revisa su estado y accede al detalle de cada publicación.</p>
-                <a th:href="@{/empresa/puestos}" class="btn btn-ver">Ver mis puestos</a>
+                <p>Consulta los puestos publicados, su estado y sus candidatos.</p>
+                <a th:href="@{/empresa/puestos}" class="btn btn-principal">Ver mis puestos</a>
             </div>
 
             <div class="opcion">
-                <h2>Crear nuevo puesto</h2>
-                <p>Publica una nueva vacante con título, descripción, salario y el tipo de visibilidad que deseas mostrar.</p>
-                <a th:href="@{/empresa/puestos/nuevo}" class="btn btn-crear">Crear puesto</a>
+                <h2>Publicar puesto</h2>
+                <p>Registra una nueva vacante con su descripción, salario y tipo de publicación.</p>
+                <a th:href="@{/empresa/puestos/nuevo}" class="btn btn-principal">Crear puesto</a>
             </div>
 
             <div class="opcion">
                 <h2>Cerrar sesión</h2>
-                <p>Finaliza tu sesión actual de forma segura cuando hayas terminado de administrar tu información.</p>
-                <a th:href="@{/logout}" class="btn btn-logout">Cerrar sesión</a>
+                <p>Finaliza tu sesión cuando termines de trabajar en la plataforma.</p>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-secundario">Cerrar sesión</button>
+                </form>
             </div>
         </div>
     </div>

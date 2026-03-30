@@ -13,28 +13,51 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, sans-serif;
-      background-color: #f0f4f8;
+      background-color: #f4f6f8;
       color: #333;
-      display: flex;
-      flex-direction: column;
       min-height: 100vh;
     }
 
     nav {
-      background-color: #2c3e6b;
-      padding: 14px 40px;
+      background-color: #1f2937;
+      padding: 14px 30px;
     }
 
-    nav a {
+    .nav-contenido {
+      max-width: 1150px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
       color: white;
-      font-size: 1.1rem;
-      font-weight: bold;
       text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+
+    .nav-links a:hover {
+      color: white;
     }
 
     .pagina {
-      flex: 1;
-      padding: 40px 20px;
+      padding: 36px 20px;
     }
 
     .contenedor {
@@ -44,15 +67,15 @@
 
     .card {
       background: white;
-      border: 1px solid #dde3ed;
+      border: 1px solid #d9e1e7;
       border-radius: 10px;
-      padding: 30px;
+      padding: 28px;
     }
 
     .header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       gap: 16px;
       flex-wrap: wrap;
       margin-bottom: 22px;
@@ -60,13 +83,13 @@
 
     .header h1 {
       font-size: 1.5rem;
-      color: #2c3e6b;
-      margin-bottom: 4px;
+      color: #22364d;
+      margin-bottom: 6px;
     }
 
     .header p {
-      font-size: 0.9rem;
-      color: #777;
+      color: #6b7280;
+      font-size: 0.92rem;
     }
 
     .acciones-superiores {
@@ -75,69 +98,88 @@
       flex-wrap: wrap;
     }
 
-    .btn-link {
+    .btn {
       display: inline-block;
-      padding: 10px 16px;
+      padding: 10px 14px;
       border-radius: 6px;
       text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
+      font-size: 0.92rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
     }
 
-    .btn-crear {
-      background-color: #f0b429;
-      color: #333;
+    .btn-principal {
+      background-color: #2f6fad;
+      color: white;
     }
 
-    .btn-crear:hover {
-      background-color: #d9a020;
+    .btn-principal:hover {
+      background-color: #275e92;
     }
 
-    .btn-dashboard {
-      background-color: #eaf4fb;
-      color: #1a6da3;
-      border: 1px solid #aed6f1;
+    .btn-secundario {
+      background-color: #eef3f7;
+      color: #27405d;
+      border-color: #cfd9e3;
     }
 
-    .btn-dashboard:hover {
-      background-color: #dbeefa;
+    .btn-secundario:hover {
+      background-color: #e3ebf2;
+    }
+
+    .btn-danger {
+      background-color: #d9534f;
+      color: white;
+      border: none;
+    }
+
+    .btn-danger:hover {
+      background-color: #c64541;
+    }
+
+    .btn-success {
+      background-color: #2f855a;
+      color: white;
+      border: none;
+    }
+
+    .btn-success:hover {
+      background-color: #276749;
     }
 
     .tabla-wrapper {
       overflow-x: auto;
-      border: 1px solid #dde3ed;
-      border-radius: 10px;
+      border: 1px solid #dde3ea;
+      border-radius: 8px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 850px;
-      background-color: white;
+      min-width: 900px;
+      background: white;
     }
 
     thead {
-      background-color: #2c3e6b;
-      color: white;
+      background-color: #f3f5f7;
     }
 
     th, td {
       text-align: left;
-      padding: 14px 12px;
+      padding: 12px;
+      border-bottom: 1px solid #e7edf2;
       vertical-align: middle;
       font-size: 0.92rem;
     }
 
-    tbody tr {
-      border-bottom: 1px solid #e8edf5;
+    th {
+      color: #32465a;
+      font-weight: 600;
     }
 
     tbody tr:nth-child(even) {
-      background-color: #f9fbfd;
-    }
-
-    tbody tr:hover {
-      background-color: #eef4fa;
+      background-color: #fafbfd;
     }
 
     .badge {
@@ -149,27 +191,27 @@
     }
 
     .badge-publico {
-      background-color: #eaf4fb;
-      color: #1a6da3;
-      border: 1px solid #aed6f1;
+      background-color: #e8f0f8;
+      color: #2f6fad;
+      border: 1px solid #c6d8ea;
     }
 
     .badge-privado {
-      background-color: #fef5e7;
-      color: #b9770e;
-      border: 1px solid #f9e0a8;
+      background-color: #efefef;
+      color: #555;
+      border: 1px solid #d6d6d6;
     }
 
     .badge-activo {
-      background-color: #eafaf1;
-      color: #1e8449;
-      border: 1px solid #a9dfbf;
+      background-color: #eaf7ef;
+      color: #2f855a;
+      border: 1px solid #c7e5d3;
     }
 
     .badge-inactivo {
-      background-color: #fdecea;
-      color: #c0392b;
-      border: 1px solid #f5c6c6;
+      background-color: #fdeeee;
+      color: #c53030;
+      border: 1px solid #f2c6c6;
     }
 
     .acciones {
@@ -178,71 +220,29 @@
       flex-wrap: wrap;
     }
 
-    .btn-detalle {
-      background-color: #4a90d9;
-      color: white;
-      text-decoration: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 0.86rem;
-    }
-
-    .btn-detalle:hover {
-      background-color: #3a7fc5;
-    }
-
-    .btn-toggle {
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 0.86rem;
-      font-family: inherit;
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    .btn-activar {
-      background-color: #1abc9c;
-      color: white;
-    }
-
-    .btn-activar:hover {
-      background-color: #17a589;
-    }
-
-    .btn-desactivar {
-      background-color: #e74c3c;
-      color: white;
-    }
-
-    .btn-desactivar:hover {
-      background-color: #cb4335;
-    }
-
     .empty-box {
-      background: #f9fbfd;
-      border: 1px dashed #c9d4e3;
-      border-radius: 10px;
-      padding: 40px 20px;
+      background: #fafbfd;
+      border: 1px dashed #c7d1dc;
+      border-radius: 8px;
+      padding: 30px 20px;
       text-align: center;
-      color: #7b8794;
-      font-size: 0.95rem;
-    }
-
-    footer {
-      background-color: #2c3e6b;
-      color: rgba(255,255,255,0.5);
-      text-align: center;
-      padding: 16px;
-      font-size: 0.82rem;
-      margin-top: 30px;
+      color: #6b7280;
+      font-size: 0.94rem;
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <a th:href="@{/empresa/dashboard}">💼 BolsaEmpleos</a>
+  <div class="nav-contenido">
+    <a class="logo" th:href="@{/empresa/dashboard}">BolsaEmpleo</a>
+
+    <div class="nav-links">
+      <a th:href="@{/empresa/dashboard}">Dashboard</a>
+      <a th:href="@{/empresa/puestos}">Mis puestos</a>
+      <a th:href="@{/empresa/puestos/nuevo}">Publicar puesto</a>
+    </div>
+  </div>
 </nav>
 
 <div class="pagina">
@@ -251,17 +251,17 @@
       <div class="header">
         <div>
           <h1>Mis puestos</h1>
-          <p>Administra las vacantes que has publicado dentro de la plataforma.</p>
+          <p>Administra las vacantes que has publicado.</p>
         </div>
 
         <div class="acciones-superiores">
-          <a th:href="@{/empresa/dashboard}" class="btn-link btn-dashboard">← Dashboard</a>
-          <a th:href="@{/empresa/puestos/nuevo}" class="btn-link btn-crear">Crear puesto</a>
+          <a th:href="@{/empresa/dashboard}" class="btn btn-secundario">Volver</a>
+          <a th:href="@{/empresa/puestos/nuevo}" class="btn btn-principal">Crear puesto</a>
         </div>
       </div>
 
       <div th:if="${#lists.isEmpty(puestos)}" class="empty-box">
-        Aún no has creado puestos. Empieza publicando una nueva vacante.
+        No has creado puestos todavía.
       </div>
 
       <div th:if="${not #lists.isEmpty(puestos)}" class="tabla-wrapper">
@@ -271,15 +271,15 @@
             <th>ID</th>
             <th>Título</th>
             <th>Salario</th>
-            <th>Tipo de publicación</th>
-            <th>Activo</th>
+            <th>Tipo</th>
+            <th>Estado</th>
             <th>Acciones</th>
           </tr>
           </thead>
           <tbody>
           <tr th:each="puesto : ${puestos}">
             <td th:text="${puesto.id}">1</td>
-            <td th:text="${puesto.titulo}">Desarrollador Java</td>
+            <td th:text="${puesto.titulo}">Desarrollador</td>
             <td th:text="${puesto.salario}">850000</td>
             <td>
                             <span th:class="${puesto.publico} ? 'badge badge-publico' : 'badge badge-privado'"
@@ -287,19 +287,17 @@
             </td>
             <td>
                             <span th:class="${puesto.activo} ? 'badge badge-activo' : 'badge badge-inactivo'"
-                                  th:text="${puesto.activo} ? 'Sí' : 'No'">Sí</span>
+                                  th:text="${puesto.activo} ? 'Activo' : 'Inactivo'">Activo</span>
             </td>
             <td>
               <div class="acciones">
-                <a th:href="@{/empresa/puestos/{id}(id=${puesto.id})}" class="btn-detalle">Ver detalle</a>
-
-                <a th:href="@{/empresa/puestos/{id}/requisitos(id=${puesto.id})}" class="btn-detalle">Requisitos</a>
-
-                <a th:href="@{/empresa/puestos/{id}/candidatos(id=${puesto.id})}" class="btn-detalle">Candidatos</a>
+                <a th:href="@{/empresa/puestos/{id}(id=${puesto.id})}" class="btn btn-principal">Detalle</a>
+                <a th:href="@{/empresa/puestos/{id}/requisitos(id=${puesto.id})}" class="btn btn-principal">Requisitos</a>
+                <a th:href="@{/empresa/puestos/{id}/candidatos(id=${puesto.id})}" class="btn btn-principal">Candidatos</a>
 
                 <form th:action="@{/empresa/puestos/{id}/toggle(id=${puesto.id})}" method="post" style="display:inline;">
                   <button type="submit"
-                          th:class="${puesto.activo} ? 'btn-toggle btn-desactivar' : 'btn-toggle btn-activar'"
+                          th:class="${puesto.activo} ? 'btn btn-danger' : 'btn btn-success'"
                           th:text="${puesto.activo} ? 'Desactivar' : 'Activar'">
                     Desactivar
                   </button>

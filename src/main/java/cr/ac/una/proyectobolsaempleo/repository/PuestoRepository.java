@@ -28,4 +28,13 @@ public interface PuestoRepository extends JpaRepository<Puesto, Long> {
     """)
     List<Puesto> buscarPublicos(@Param("caracteristicaId") Long caracteristicaId,
                                 @Param("nivel") Integer nivel);
+
+    @Query("""
+        SELECT p
+        FROM Puesto p
+        WHERE FUNCTION('MONTH', p.fechaCreacion) = :mes
+          AND FUNCTION('YEAR', p.fechaCreacion) = :anio
+        ORDER BY p.fechaCreacion DESC
+    """)
+    List<Puesto> findByMesYAnio(@Param("mes") int mes, @Param("anio") int anio);
 }

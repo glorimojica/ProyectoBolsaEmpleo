@@ -212,6 +212,23 @@
             </div>
 
             <div class="opcion">
+                <h2>Reporte PDF mensual</h2>
+                <p>Genera un reporte PDF con los puestos registrados en un mes y año específicos.</p>
+
+                <form th:action="@{/admin/reportes/puestos-pdf}" method="get" target="_blank">
+                    <label for="mes">Mes:</label>
+                    <input type="number" id="mes" name="mes" min="1" max="12" required
+                           style="width:100%; margin:8px 0 12px 0; padding:10px; border:1px solid #ccd6e0; border-radius:6px;">
+
+                    <label for="anio">Año:</label>
+                    <input type="number" id="anio" name="anio" min="2025" required
+                           style="width:100%; margin:8px 0 16px 0; padding:10px; border:1px solid #ccd6e0; border-radius:6px;">
+
+                    <button type="submit" class="btn btn-caracteristicas">Generar PDF</button>
+                </form>
+            </div>
+
+            <div class="opcion">
                 <h2>Cerrar sesión</h2>
                 <p>Finaliza tu sesión actual de manera segura cuando hayas terminado de administrar el sistema.</p>
                 <form th:action="@{/logout}" method="post">
