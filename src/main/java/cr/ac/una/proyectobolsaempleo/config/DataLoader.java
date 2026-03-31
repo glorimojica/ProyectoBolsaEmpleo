@@ -1,4 +1,4 @@
-package cr.ac.una.proyectobolsaempleo.config;
+/*package cr.ac.una.proyectobolsaempleo.config;
 
 import cr.ac.una.proyectobolsaempleo.model.Administrador;
 import cr.ac.una.proyectobolsaempleo.model.Empresa;
@@ -43,6 +43,7 @@ public class DataLoader {
                 usuarioRepository.save(usuarioAdmin);
 
                 Administrador admin = Administrador.builder()
+                        .identificacion("admin01")
                         .nombre("Administrador Principal")
                         .usuario(usuarioAdmin)
                         .build();
@@ -111,3 +112,4 @@ public class DataLoader {
         };
     }
 }
+*/

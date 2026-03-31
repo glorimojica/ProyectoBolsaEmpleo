@@ -17,6 +17,7 @@ public class Administrador {
     private Long id;
 
     private String nombre;
+    private String identificacion;
 
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false, unique = true)

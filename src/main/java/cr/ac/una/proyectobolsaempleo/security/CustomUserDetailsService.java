@@ -1,6 +1,8 @@
 package cr.ac.una.proyectobolsaempleo.security;
 
 import cr.ac.una.proyectobolsaempleo.model.Usuario;
+import cr.ac.una.proyectobolsaempleo.model.Administrador;
+import cr.ac.una.proyectobolsaempleo.repository.AdministradorRepository;
 import cr.ac.una.proyectobolsaempleo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.DisabledException;
@@ -16,10 +18,23 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private AdministradorRepository administradorRepository;
+
     @Override
-    public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepository.findByCorreo(correo)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario usuario = usuarioRepository.findByCorreo(username).orElse(null);
+
+        if (usuario == null) {
+            Administrador admin = administradorRepository.findByIdentificacion(username).orElse(null);
+            if (admin != null) {
+                usuario = admin.getUsuario();
+            }
+        }
+
+        if (usuario == null) {
+            throw new UsernameNotFoundException("Usuario no encontrado");
+        }
 
         if ("RECHAZADO".equals(usuario.getEstado())) {
             throw new DisabledException("RECHAZADO:" + usuario.getComentarioRevision());
